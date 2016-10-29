@@ -66,7 +66,9 @@ public interface Const {
             "\t\tEnter your maximum limit : ";
 
     public static final String TAB_STRING = "\t";
-    /** Strings for statistic output */
+    /**
+     * Strings for statistic output
+     */
     public static final String STATISTIC_HEADER_STRING =
             "Now look at your game statistic : ";
     public static final String NUMBER_OF_MOVE_STRING = " move";

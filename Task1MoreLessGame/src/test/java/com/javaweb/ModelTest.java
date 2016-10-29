@@ -12,7 +12,7 @@ import java.util.Collection;
 
 /**
  * ModelTest.java
- *
+ * <p>
  * This module include all methods from class with
  * business logic. Getters also covered. This class
  * use @RunWith annotation to make code clear and
@@ -24,15 +24,24 @@ import java.util.Collection;
  */
 @RunWith(Parameterized.class)
 public class ModelTest {
-    /** Object that we need to test */
+    /**
+     * Object that we need to test
+     */
     private Model testModel;
 
-    /** Parameters, which takes automatically from
-     * {@link #getTestDataForRandom()}*/
+    /**
+     * Parameters, which takes automatically from
+     * {@link #getTestDataForRandom()}
+     */
     public int minParameterForRandom;
     public int maxParameterForRandom;
 
-    /** Constructor that wee need to make for parameters */
+    /**
+     * Constructor that wee need to make for parameters
+     *
+     * @param minParameterForRandom similar to RAND_MIN
+     * @param maxParameterForRandom similar to RAND_MAX
+     */
     public ModelTest(int minParameterForRandom, int maxParameterForRandom) {
         this.minParameterForRandom = minParameterForRandom;
         this.maxParameterForRandom = maxParameterForRandom;
@@ -104,8 +113,8 @@ public class ModelTest {
         int min = minParameterForRandom;
         int max = maxParameterForRandom;
         int randomNumber =
-                testModel.getRandomNumber(min,max);
-        if(min > max){
+                testModel.getRandomNumber(min, max);
+        if (min > max) {
             int tmp = max;
             max = min;
             min = tmp;
@@ -116,6 +125,7 @@ public class ModelTest {
 
     /**
      * Generating parameters for our class
+     *
      * @return array of parameters
      */
     @Parameterized.Parameters

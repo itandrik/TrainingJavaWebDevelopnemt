@@ -51,7 +51,8 @@ public class View {
     /**
      * Format printing of statistic of the game.
      *
-     * @param statisticArray
+     * @param statisticArray array, which we
+     *                       take from model through controller
      */
     public void showStatistic(ArrayList<ArrayList<Integer>> statisticArray) {
         printlnMessage(Const.STATISTIC_HEADER_STRING);
@@ -61,22 +62,22 @@ public class View {
         for (ArrayList<Integer> arr : statisticArray) {
             printlnMessage(
                     Const.TAB_STRING +
-                    String.valueOf(moveCounter++) +
-                    Const.NUMBER_OF_MOVE_STRING);
+                            String.valueOf(moveCounter++) +
+                            Const.NUMBER_OF_MOVE_STRING);
             printlnMessage(
                     Const.INPUT_NUMBER_STRING + arr.get(Const.INPUT_NUMBER_STATISTIC),
                     Const.TAB_STRING + Const.DIAPASON_STRING +
-                    arr.get(Const.LEFT_LIMIT_STATISTIC) +
-                    Const.BETWEEN_NUMBERS_STRING +
-                    arr.get(Const.RIGHT_LIMIT_STATISTIC));
+                            arr.get(Const.LEFT_LIMIT_STATISTIC) +
+                            Const.BETWEEN_NUMBERS_STRING +
+                            arr.get(Const.RIGHT_LIMIT_STATISTIC));
         }
 
-        if(moveCounter > 1) {
+        if (moveCounter > 1) {
             printlnMessage(String.valueOf(moveCounter) + // Normal win string
                     Const.MOVE_QUANTITY_STRING);
-        }else if(moveCounter == 1){
+        } else if (moveCounter == 1) {
             printlnMessage(Const.PERFECT_WIN_STRING);   // Win by 1 move
-        }else {
+        } else {
             throw new IndexOutOfBoundsException();      //If somebody set counter to negative
         }
 

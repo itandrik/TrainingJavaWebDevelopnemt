@@ -86,7 +86,7 @@ public class Controller {
      * Checking input values.
      * Verifying on integer digits.
      *
-     * @param sc Scanner, which has created in {@see Controller.run}
+     * @param sc Scanner, which has created in {@link Controller#run()}
      * @return integer value of number from console
      */
     public int inputIntValueWithScanner(Scanner sc) {
@@ -107,7 +107,7 @@ public class Controller {
      * Checking input values.
      * Verifying on integer digits.
      *
-     * @param sc Scanner, which has created in {@see Controller.run}
+     * @param sc Scanner, which has created in {@link Controller#run()}
      * @return integer value of number from console
      */
     public int inputValueWithScannerForMenu(Scanner sc) {

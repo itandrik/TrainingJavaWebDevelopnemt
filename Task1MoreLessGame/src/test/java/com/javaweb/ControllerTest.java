@@ -7,7 +7,7 @@ import org.junit.rules.ExpectedException;
 
 /**
  * ControllerTest.java
- *
+ * <p>
  * This module include testing of exceptions in Controller class
  * Some functions can throw exception because of type.
  *
@@ -15,7 +15,9 @@ import org.junit.rules.ExpectedException;
  * @version 1.0
  */
 public class ControllerTest {
-    /** Implementation of Controller class */
+    /**
+     * Implementation of Controller class
+     */
     private static Controller testController;
 
     /**
@@ -36,7 +38,7 @@ public class ControllerTest {
      * Checking on nullPointerException while Scanner == null
      */
     @Test
-    public void inputIntValueWithScanner(){
+    public void inputIntValueWithScanner() {
         expectedException.expect(NullPointerException.class);
         testController.inputIntValueWithScanner(null);
     }

@@ -49,14 +49,14 @@ public class Model {
         statisticArray = new ArrayList<>();
 
         //Somebody can change our constants and we will have problems
-        if(Const.RAND_MIN < Const.RAND_MAX) {
+        if (Const.RAND_MIN < Const.RAND_MAX) {
             leftLimit = Const.RAND_MIN;
             rightLimit = Const.RAND_MAX;
             guessNumber = getRandomNumber();
-        }else{
+        } else {
             leftLimit = Const.RAND_MAX;
             rightLimit = Const.RAND_MIN;
-            guessNumber = getRandomNumber(Const.RAND_MIN,Const.RAND_MAX);
+            guessNumber = getRandomNumber(Const.RAND_MIN, Const.RAND_MAX);
         }
     }
 
@@ -116,7 +116,7 @@ public class Model {
      * @return random number from diapason
      */
     int getRandomNumber(int min, int max) {
-        if(max < min){
+        if (max < min) {
             int temp = min;
             min = max;
             max = temp;
@@ -169,7 +169,7 @@ public class Model {
      *
      * @param inputNumber to save input number in array
      */
-     void addToStatistic(int inputNumber) {
+    void addToStatistic(int inputNumber) {
         ArrayList<Integer> newItem = new ArrayList<>();
         newItem.add(Const.INPUT_NUMBER_STATISTIC, inputNumber);
         newItem.add(Const.LEFT_LIMIT_STATISTIC, leftLimit);

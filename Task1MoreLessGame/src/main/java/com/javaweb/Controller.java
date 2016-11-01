@@ -2,6 +2,8 @@ package com.javaweb;
 
 import java.util.Scanner;
 
+import static com.javaweb.View.BETWEEN_NUMBERS_STRING;
+
 /**
  * Controller.java
  * <p>
@@ -42,7 +44,7 @@ public class Controller {
         /* Scanner to makes input from console */
         Scanner scanner = new Scanner(Const.INPUT_STREAM);
         /* Header in console */
-        view.printlnMessage(Const.GREETING_STRING);
+        view.printlnMessage(View.GREETING_STRING);
 
         /* Show menu in the console and choosing item */
         int menuItem = inputValueWithScannerForMenu(scanner);
@@ -52,11 +54,11 @@ public class Controller {
                 int min;
                 int max;
                 do {
-                    view.printlnMessage(Const.ENTER_MINIMUM_STRING);
+                    view.printlnMessage(View.ENTER_MINIMUM_STRING);
                     min = inputIntValueWithScanner(scanner);
-                    view.printlnMessage(Const.ENTER_MAXIMUM_STRING);
+                    view.printlnMessage(View.ENTER_MAXIMUM_STRING);
                     max = inputIntValueWithScanner(scanner);
-                } while (min == max);
+                } while (min >= max);
                 model = new Model(min, max);
                 break;
             case Const.SECOND_MENU_ITEM:
@@ -67,6 +69,11 @@ public class Controller {
                 break;
         }
 
+        view.printlnMessage(View.INPUT_INT_DATA_STRING,
+                String.valueOf(model.getLeftLimit()) +
+                        BETWEEN_NUMBERS_STRING +
+                        String.valueOf(model.getRightLimit()));
+
         /* Game engine. Working while not win or exit. */
         int inputValue;
         while (!model.isCorrectNumber(
@@ -76,9 +83,9 @@ public class Controller {
                     model.getLeftLimit(),
                     model.getRightLimit());
         }
-        view.printlnMessage(Const.WIN_STRING);
+        view.printlnMessage(View.WIN_STRING);
         view.showStatistic(model.getStatisticArray());
-        view.printlnMessage(Const.GUESS_NUMBER_STRING + String.valueOf(inputValue));
+        view.printlnMessage(View.GUESS_NUMBER_STRING + String.valueOf(inputValue));
     }
 
 
@@ -90,14 +97,14 @@ public class Controller {
      * @return integer value of number from console
      */
     public int inputIntValueWithScanner(Scanner sc) {
-        view.printlnMessage(Const.INPUT_INT_DATA_STRING);
+        view.printlnMessage(View.INPUT_INT_DATA_STRING);
 
         // User have to have exit possibility
-        if (sc.hasNext("exit")) System.exit(0);
+        if (sc.hasNext(View.EXIT_STRING)) System.exit(0);
 
         while (!sc.hasNextInt()) {
-            view.printlnMessage(Const.ERROR_MESSAGE +
-                    Const.INPUT_INT_DATA_STRING);
+            view.printlnMessage(View.ERROR_MESSAGE +
+                    View.INPUT_INT_DATA_STRING);
             sc.next();
         }
         return sc.nextInt();
@@ -115,17 +122,17 @@ public class Controller {
         while (true) {
             /* Integer values verifying */
             while (!sc.hasNextInt()) {
-                view.printlnMessage(Const.ERROR_MESSAGE);
+                view.printlnMessage(View.ERROR_MESSAGE);
                 view.printMenu();
                 sc.next();
             }
 
             /* Verifying values, which should be in menu diapason */
             int nextInt = sc.nextInt();
-            if ((nextInt > 0) && (nextInt <= Const.MENU_STRINGS.length))
+            if ((nextInt > 0) && (nextInt <= View.MENU_STRINGS.length))
                 return nextInt;
             else {
-                view.printlnMessage(Const.ERROR_MESSAGE);
+                view.printlnMessage(View.ERROR_MESSAGE);
                 view.printMenu();
             }
         }

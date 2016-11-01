@@ -47,17 +47,9 @@ public class Model {
      */
     Model() {
         statisticArray = new ArrayList<>();
-
-        //Somebody can change our constants and we will have problems
-        if (Const.RAND_MIN < Const.RAND_MAX) {
-            leftLimit = Const.RAND_MIN;
-            rightLimit = Const.RAND_MAX;
-            guessNumber = getRandomNumber();
-        } else {
-            leftLimit = Const.RAND_MAX;
-            rightLimit = Const.RAND_MIN;
-            guessNumber = getRandomNumber(Const.RAND_MIN, Const.RAND_MAX);
-        }
+        leftLimit = Const.RAND_MIN;
+        rightLimit = Const.RAND_MAX;
+        guessNumber = getRandomNumber(leftLimit, rightLimit);
     }
 
     /**
@@ -69,42 +61,9 @@ public class Model {
      */
     Model(int min, int max) {
         statisticArray = new ArrayList<>();
-        if (min < max) {
-            leftLimit = min;
-            rightLimit = max;
-        } else {
-            leftLimit = max;
-            rightLimit = min;
-        }
+        leftLimit = min;
+        rightLimit = max;
         guessNumber = getRandomNumber(leftLimit, rightLimit);
-    }
-
-    /**
-     * Method, which we will use to show new diapason
-     *
-     * @return upper limit of our diapason
-     */
-    int getRightLimit() {
-        return rightLimit;
-    }
-
-    /**
-     * Method, which we will use to show new diapason
-     *
-     * @return lower limit of our diapason
-     */
-    int getLeftLimit() {
-        return leftLimit;
-    }
-
-    /**
-     * This program create statistic of the game.
-     * Here we can get from the business logic.
-     *
-     * @return array with statistic values
-     */
-    ArrayList<ArrayList<Integer>> getStatisticArray() {
-        return statisticArray;
     }
 
     /**
@@ -121,8 +80,8 @@ public class Model {
             min = max;
             max = temp;
         }
-        int range = max - min + 1;
-        return (int) (Math.random() * range) + min;
+        return (int) Math.ceil(Math.random() *
+                (max - min - 1) + min);
     }
 
     /**
@@ -133,8 +92,8 @@ public class Model {
      * @return random number from diapason
      */
     int getRandomNumber() {
-        int range = Math.abs(Const.RAND_MAX - Const.RAND_MIN) + 1;
-        return (int) (Math.random() * range) + Const.RAND_MIN;
+        return (int) Math.ceil(Math.random() *
+                (Const.RAND_MAX - Const.RAND_MIN - 1) + Const.RAND_MIN);
     }
 
     /**
@@ -176,4 +135,29 @@ public class Model {
         newItem.add(Const.RIGHT_LIMIT_STATISTIC, rightLimit);
         statisticArray.add(newItem);
     }
+
+    /**
+     * It is not good idea as for me to get secret value, but
+     * it doesn't matter because of reflection. Don't think about
+     * security in this step. Use this value for JUnit.
+     *
+     * @return random number from diapason
+     */
+    public int getGuessNumber() {
+        return this.guessNumber;
+    }
+
+    int getRightLimit() {
+        return rightLimit;
+    }
+
+    int getLeftLimit() {
+        return leftLimit;
+    }
+
+    ArrayList<ArrayList<Integer>> getStatisticArray() {
+        return statisticArray;
+    }
+
+
 }

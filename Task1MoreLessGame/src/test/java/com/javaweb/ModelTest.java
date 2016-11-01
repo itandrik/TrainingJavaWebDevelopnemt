@@ -98,9 +98,11 @@ public class ModelTest {
      */
     @Test
     public void testGetRandomNumber() {
-        int randomNumber = testModel.getRandomNumber();
-        Assert.assertTrue((randomNumber >= Const.RAND_MIN) &&
-                (randomNumber <= Const.RAND_MAX));
+        for (int i = 0;i < maxParameterForRandom*maxParameterForRandom;i++) {
+            int randomNumber = testModel.getRandomNumber();
+            Assert.assertTrue((randomNumber >= Const.RAND_MIN) &&
+                    (randomNumber <= Const.RAND_MAX));
+        }
     }
 
     /**
@@ -112,17 +114,23 @@ public class ModelTest {
     public void testGetRandomNumberWithParameters() {
         int min = minParameterForRandom;
         int max = maxParameterForRandom;
-        int randomNumber =
-                testModel.getRandomNumber(min, max);
-        if (min > max) {
-            int tmp = max;
-            max = min;
-            min = tmp;
+        for (int i = 0;i < maxParameterForRandom*maxParameterForRandom;i++) {
+            int randomNumber =
+                    testModel.getRandomNumber(min, max);
+            if (min > max) {
+                int tmp = max;
+                max = min;
+                min = tmp;
+            }
+            Assert.assertTrue((randomNumber >= min) &&
+                    (randomNumber <= max));
         }
-        Assert.assertTrue((randomNumber >= min) &&
-                (randomNumber <= max));
     }
 
+    @Test
+    public void testConstValues(){
+        Assert.assertTrue(Const.RAND_MIN < Const.RAND_MAX);
+    }
     /**
      * Generating parameters for our class
      *

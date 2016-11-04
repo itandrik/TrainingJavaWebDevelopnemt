@@ -1,8 +1,12 @@
 package com.javaweb;
 
+import com.javaweb.model.Attempt;
+import com.javaweb.model.Model;
+
+import java.util.List;
 import java.util.Scanner;
 
-import static com.javaweb.View.BETWEEN_NUMBERS_STRING;
+import static com.javaweb.View.*;
 
 /**
  * Controller.java
@@ -19,18 +23,18 @@ public class Controller {
     /**
      * Object of model, which we will initialise later
      */
-    Model model;
+    private Model model;
 
     /**
      * Object of view, which we initialise instantly in constructor
      */
-    View view;
+    private View view;
 
     /**
      * Default constructor with view object initializing
      */
-    public Controller() {
-        view = new View();
+    public Controller(View view) {
+        this.view = view;
     }
 
     /**
@@ -46,6 +50,87 @@ public class Controller {
         /* Header in console */
         view.printlnMessage(View.GREETING_STRING);
 
+        model = getModelFromMenu(scanner);
+
+        view.printlnMessage(View.INPUT_INT_DATA_STRING,
+                String.valueOf(model.getLeftLimit()) +
+                        BETWEEN_NUMBERS_STRING +
+                        String.valueOf(model.getRightLimit()));
+
+        processUser(scanner);
+        showWinMessage();
+    }
+
+    /**
+     * One of the main procedure in controller.
+     * It takes input number from console and check it
+     * in the model class. Furthermore, it makes statistic array
+     *
+     * @param scanner Scanner object for console reading
+     */
+    private void processUser(Scanner scanner){
+        int inputValue;
+        while (!model.isCorrectNumber(
+                inputValue = inputIntValueWithScanner(scanner))) {
+            model.addToStatistic(inputValue);
+            view.printIncorrectInputNumber(
+                    model.getLeftLimit(),
+                    model.getRightLimit());
+        }
+    }
+
+    /**
+     * Writing message after {@link #processUser(Scanner)} loop
+     */
+    private void showWinMessage() {
+        view.printlnMessage(View.WIN_STRING);
+        showStatistic(model.getStatisticArray());
+        view.printlnMessage(View.GUESS_NUMBER_STRING +
+                String.valueOf(model.getGuessNumber()));
+    }
+
+    /**
+     * Format printing of statistic of the game.
+     *
+     * @param statisticArray array, which we
+     *                       take from model
+     */
+    private void showStatistic(List<Attempt> statisticArray)
+            throws IndexOutOfBoundsException {
+        view.printlnMessage(STATISTIC_HEADER_STRING);
+
+        /* To show statistic on each stage*/
+        int moveCounter = 1;
+        for (Attempt arr : statisticArray) {
+            view.printlnMessage(
+                    TAB_STRING +
+                            String.valueOf(moveCounter++) +
+                            NUMBER_OF_MOVE_STRING);
+            view.printlnMessage(
+                    INPUT_NUMBER_STRING + arr.getInputNumber(),
+                    TAB_STRING + DIAPASON_STRING + arr.getLeftLimit() +
+                            BETWEEN_NUMBERS_STRING + arr.getRightLimit());
+        }
+
+        if (moveCounter > 1) {
+            view.printlnMessage(String.valueOf(moveCounter) + // Normal win string
+                    MOVE_QUANTITY_STRING);
+        } else if (moveCounter == 1) {
+            view.printlnMessage(PERFECT_WIN_STRING);   // Win by 1 move
+        } else {
+            throw new IndexOutOfBoundsException();      //If somebody set counter to negative
+        }
+    }
+
+    /**
+     * Menu item 1 : custom diapason for randomiser;
+     * 2 : default diapason for randomiser;
+     * 3 : exit;
+     *
+     * @param scanner Scanner object for console reading
+     * @return model object based on menu item
+     */
+    private Model getModelFromMenu(Scanner scanner) {
         /* Show menu in the console and choosing item */
         int menuItem = inputValueWithScannerForMenu(scanner);
         switch (menuItem) {
@@ -59,35 +144,15 @@ public class Controller {
                     view.printlnMessage(View.ENTER_MAXIMUM_STRING);
                     max = inputIntValueWithScanner(scanner);
                 } while (min >= max);
-                model = new Model(min, max);
-                break;
+                return new Model(min, max);
             case Const.SECOND_MENU_ITEM:
-                model = new Model();        // Default constructor
-                break;
+                return new Model();        // Default constructor
             case Const.THIRD_MENU_ITEM:
                 System.exit(0);             // Exit from program
-                break;
         }
 
-        view.printlnMessage(View.INPUT_INT_DATA_STRING,
-                String.valueOf(model.getLeftLimit()) +
-                        BETWEEN_NUMBERS_STRING +
-                        String.valueOf(model.getRightLimit()));
-
-        /* Game engine. Working while not win or exit. */
-        int inputValue;
-        while (!model.isCorrectNumber(
-                inputValue = inputIntValueWithScanner(scanner))) {
-            model.addToStatistic(inputValue);
-            view.printIncorrectInputNumber(
-                    model.getLeftLimit(),
-                    model.getRightLimit());
-        }
-        view.printlnMessage(View.WIN_STRING);
-        view.showStatistic(model.getStatisticArray());
-        view.printlnMessage(View.GUESS_NUMBER_STRING + String.valueOf(inputValue));
+        return null;
     }
-
 
     /**
      * Checking input values.

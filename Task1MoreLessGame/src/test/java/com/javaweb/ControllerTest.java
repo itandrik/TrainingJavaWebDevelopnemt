@@ -31,7 +31,8 @@ public class ControllerTest {
      */
     @BeforeClass
     public static void setUp() {
-        testController = new Controller();
+        View view = new View();
+        testController = new Controller(view);
     }
 
     /**

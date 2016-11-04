@@ -1,12 +1,13 @@
 package com.javaweb;
 
+import com.javaweb.model.Attempt;
+import com.javaweb.model.Model;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -74,31 +75,12 @@ public class ModelTest {
     }
 
     /**
-     * Testing array that wee need to show statistic.
-     * This method it is similar with {@link #testAddToStatistic()}
-     */
-    @Test
-    public void testGetStatisticArray() {
-        ArrayList<ArrayList<Integer>> testArray = new ArrayList<>();
-        ArrayList<Integer> testStatisticArray = new ArrayList<>();
-        testStatisticArray.add(minParameterForRandom);
-        testStatisticArray.add(Const.RAND_MIN);
-        testStatisticArray.add(Const.RAND_MAX);
-        testModel.addToStatistic(minParameterForRandom);
-        testArray.add(testStatisticArray);
-
-        Assert.assertArrayEquals(
-                testArray.toArray(),
-                testModel.getStatisticArray().toArray());
-    }
-
-    /**
      * Testing random number without parameters
      * based on constant variables
      */
     @Test
     public void testGetRandomNumber() {
-        for (int i = 0;i < maxParameterForRandom*maxParameterForRandom;i++) {
+        for (int i = 0; i < maxParameterForRandom * maxParameterForRandom; i++) {
             int randomNumber = testModel.getRandomNumber();
             Assert.assertTrue((randomNumber >= Const.RAND_MIN) &&
                     (randomNumber <= Const.RAND_MAX));
@@ -114,7 +96,7 @@ public class ModelTest {
     public void testGetRandomNumberWithParameters() {
         int min = minParameterForRandom;
         int max = maxParameterForRandom;
-        for (int i = 0;i < maxParameterForRandom*maxParameterForRandom;i++) {
+        for (int i = 0; i < maxParameterForRandom * maxParameterForRandom; i++) {
             int randomNumber =
                     testModel.getRandomNumber(min, max);
             if (min > max) {
@@ -128,9 +110,10 @@ public class ModelTest {
     }
 
     @Test
-    public void testConstValues(){
+    public void testConstValues() {
         Assert.assertTrue(Const.RAND_MIN < Const.RAND_MAX);
     }
+
     /**
      * Generating parameters for our class
      *
@@ -158,23 +141,20 @@ public class ModelTest {
     /**
      * Testing array that wee need to add statistic to model,
      * in order to save data.
-     * This method it is similar with {@link #testGetStatisticArray()}
      */
     @Test
     public void testAddToStatistic() {
-        testModel.addToStatistic(minParameterForRandom);
+        Attempt attempt = new Attempt(1, Const.RAND_MIN, Const.RAND_MAX);
+        testModel.addToStatistic(1);
 
-        ArrayList<Integer> newItem = new ArrayList<>();
-        newItem.add(Const.INPUT_NUMBER_STATISTIC, minParameterForRandom);
-        newItem.add(Const.LEFT_LIMIT_STATISTIC,
-                testModel.getLeftLimit());
-        newItem.add(Const.RIGHT_LIMIT_STATISTIC,
-                testModel.getRightLimit());
-        ArrayList<ArrayList<Integer>> testArray = new ArrayList<>();
-
-        testArray.add(newItem);
-        Assert.assertArrayEquals(testArray.toArray(),
-                testModel.getStatisticArray().toArray());
+        Attempt statisticAttempt = testModel.getStatisticArray().get(0);
+        Assert.assertArrayEquals(new int[]{
+                attempt.getInputNumber(),
+                attempt.getLeftLimit(),
+                attempt.getRightLimit()},
+                new int[]{statisticAttempt.getInputNumber(),
+                        statisticAttempt.getLeftLimit(),
+                        statisticAttempt.getRightLimit()});
     }
 
 }

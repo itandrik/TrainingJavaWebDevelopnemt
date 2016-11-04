@@ -1,6 +1,9 @@
-package com.javaweb;
+package com.javaweb.model;
+
+import com.javaweb.Const;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Model.java
@@ -12,7 +15,8 @@ import java.util.ArrayList;
  * it with input value.
  *
  * @author Andrii Chernysh {itcherry97@gmail.com}
- * @version 1.0 29 Oct 2016
+ * @version 2.0
+ * @since 29 Oct 2016
  */
 public class Model {
     /**
@@ -39,13 +43,13 @@ public class Model {
      * 1 - leftLimit;
      * 2 - rightLimit;
      */
-    private ArrayList<ArrayList<Integer>> statisticArray;
+    private List<Attempt> statisticArray;
 
     /**
      * Default constructor. It generates number and limits
      * using const values from interface Const.
      */
-    Model() {
+    public Model() {
         statisticArray = new ArrayList<>();
         leftLimit = Const.RAND_MIN;
         rightLimit = Const.RAND_MAX;
@@ -59,7 +63,7 @@ public class Model {
      * @param min minimum limit for generating number
      * @param max maximum limit for generating number
      */
-    Model(int min, int max) {
+    public Model(int min, int max) {
         statisticArray = new ArrayList<>();
         leftLimit = min;
         rightLimit = max;
@@ -74,7 +78,7 @@ public class Model {
      * @param max upper limit of our diapason
      * @return random number from diapason
      */
-    int getRandomNumber(int min, int max) {
+    public int getRandomNumber(int min, int max) {
         if (max < min) {
             int temp = min;
             min = max;
@@ -91,7 +95,7 @@ public class Model {
      *
      * @return random number from diapason
      */
-    int getRandomNumber() {
+    public int getRandomNumber() {
         return (int) Math.ceil(Math.random() *
                 (Const.RAND_MAX - Const.RAND_MIN - 1) + Const.RAND_MIN);
     }
@@ -103,7 +107,7 @@ public class Model {
      * @param inputNumber is player number from console
      * @return is it correct number or not
      */
-    boolean isCorrectNumber(int inputNumber) {
+    public boolean isCorrectNumber(int inputNumber) {
         if ((inputNumber > rightLimit) || (inputNumber < leftLimit)) {
             return false;
         }
@@ -128,12 +132,9 @@ public class Model {
      *
      * @param inputNumber to save input number in array
      */
-    void addToStatistic(int inputNumber) {
-        ArrayList<Integer> newItem = new ArrayList<>();
-        newItem.add(Const.INPUT_NUMBER_STATISTIC, inputNumber);
-        newItem.add(Const.LEFT_LIMIT_STATISTIC, leftLimit);
-        newItem.add(Const.RIGHT_LIMIT_STATISTIC, rightLimit);
-        statisticArray.add(newItem);
+    public void addToStatistic(int inputNumber) {
+        Attempt attempt = new Attempt(inputNumber, leftLimit, rightLimit);
+        statisticArray.add(attempt);
     }
 
     /**
@@ -147,15 +148,15 @@ public class Model {
         return this.guessNumber;
     }
 
-    int getRightLimit() {
+    public int getRightLimit() {
         return rightLimit;
     }
 
-    int getLeftLimit() {
+    public int getLeftLimit() {
         return leftLimit;
     }
 
-    ArrayList<ArrayList<Integer>> getStatisticArray() {
+    public List<Attempt> getStatisticArray() {
         return statisticArray;
     }
 

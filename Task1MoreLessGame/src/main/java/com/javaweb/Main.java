@@ -12,7 +12,8 @@ package com.javaweb;
 public class Main {
     public static void main(String[] args) {
         //Initialization
-        Controller controller = new Controller();
+        View view = new View();
+        Controller controller = new Controller(view);
         //Run
         controller.run();
     }

@@ -1,7 +1,5 @@
 package com.javaweb;
 
-import java.util.ArrayList;
-
 import static com.javaweb.Const.RAND_MAX;
 import static com.javaweb.Const.RAND_MIN;
 
@@ -98,38 +96,5 @@ public class View {
         );
     }
 
-    /**
-     * Format printing of statistic of the game.
-     *
-     * @param statisticArray array, which we
-     *                       take from model through controller
-     */
-    public void showStatistic(ArrayList<ArrayList<Integer>> statisticArray) {
-        printlnMessage(STATISTIC_HEADER_STRING);
 
-        /* To show statistic on each stage*/
-        int moveCounter = 1;
-        for (ArrayList<Integer> arr : statisticArray) {
-            printlnMessage(
-                    TAB_STRING +
-                            String.valueOf(moveCounter++) +
-                            NUMBER_OF_MOVE_STRING);
-            printlnMessage(
-                    INPUT_NUMBER_STRING + arr.get(Const.INPUT_NUMBER_STATISTIC),
-                    TAB_STRING + DIAPASON_STRING +
-                            arr.get(Const.LEFT_LIMIT_STATISTIC) +
-                            BETWEEN_NUMBERS_STRING +
-                            arr.get(Const.RIGHT_LIMIT_STATISTIC));
-        }
-
-        if (moveCounter > 1) {
-            printlnMessage(String.valueOf(moveCounter) + // Normal win string
-                    MOVE_QUANTITY_STRING);
-        } else if (moveCounter == 1) {
-            printlnMessage(PERFECT_WIN_STRING);   // Win by 1 move
-        } else {
-            throw new IndexOutOfBoundsException();      //If somebody set counter to negative
-        }
-
-    }
 }

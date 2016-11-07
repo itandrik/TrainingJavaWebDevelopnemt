@@ -52,8 +52,9 @@ public class Model {
      *
      * @param id - number of record to delete.
      */
-    public void deleteRecord(int id) {
+    public int deleteRecord(int id) {
         recordsList.remove(id - 1);
+        return 1;
     }
 
     /**

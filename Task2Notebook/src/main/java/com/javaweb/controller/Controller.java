@@ -1,8 +1,9 @@
-package com.javaweb;
+package com.javaweb.controller;
 
 import com.javaweb.entity.Model;
 import com.javaweb.entity.Record;
 import com.javaweb.entity.Validator;
+import com.javaweb.view.View;
 
 import java.io.IOException;
 import java.util.List;
@@ -63,36 +64,44 @@ public class Controller implements Const {
     }
 
     public void changeRecordInNotebook() {
-        if(model.getRecords().isEmpty()){
+        if (model.getRecords().isEmpty()) {
             view.printlnMessage(View.EMPTY_NOTEBOOK);
             return;
         }
         view.printMessage(View.INPUT_ID + model.getRecords().size() + " : ");
-        int id = scanner.nextInt();
-        while((!scanner.hasNextInt()) && (id <= 0) &&
-                (id > model.getRecords().size())){
+        String id = scanner.next();
+        while (!validator.isValid(id, String.format("[1-%d]+",
+                model.getRecords().size()))) {
             view.printError(View.INPUT_ID + model.getRecords().size() + " : ");
-            id = scanner.nextInt();
+            id = scanner.next();
         }
+
         Record newRecord = createNewRecord();
         newRecord.setChangeDate();
-        model.changeRecord(id,newRecord);
+        newRecord.setCreateDate(model.getRecords().get(Integer.parseInt(id)).getCreateDate());
+        model.changeRecord(Integer.parseInt(id), newRecord);
     }
 
     public void deleteRecordFormNotebook() {
         view.printMessage(View.INPUT_ID + model.getRecords().size() + " : ");
-        int id = scanner.nextInt();
-        while((!scanner.hasNextInt()) && (id <= 0) &&
-                (id > model.getRecords().size())){
+        view.printMessage(View.INPUT_ID + model.getRecords().size() + " : ");
+        String id = scanner.next();
+        while (!validator.isValid(id, String.format("[1-%d]+",
+                model.getRecords().size()))) {
             view.printError(View.INPUT_ID + model.getRecords().size() + " : ");
-            id = scanner.nextInt();
+            id = scanner.next();
         }
-        model.deleteRecord(id);
+        view.printlnMessage(model.deleteRecord(Integer.parseInt(id)) + View.DELETE_ROW);
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void showRecordsFromNotebook(){
+    public void showRecordsFromNotebook() {
         List<Record> recordList = model.getRecords();
-        if(recordList.isEmpty()){
+        if (recordList.isEmpty()) {
             view.printlnMessage(View.EMPTY_NOTEBOOK);
             return;
         }
@@ -109,10 +118,10 @@ public class Controller implements Const {
             view.printlnMessage(View.OUTPUT_FIELDS[i++] + item.getHomePhone());
             view.printlnMessage(View.OUTPUT_FIELDS[i++] +
                     item.getMobilePhone());
-            if(item.getMobilePhoneOptional() != null){
+            if (item.getMobilePhoneOptional() != null) {
                 view.printlnMessage(View.OUTPUT_FIELDS[i++] +
                         item.getMobilePhoneOptional());
-            }else{
+            } else {
                 i++;
             }
             view.printlnMessage(View.OUTPUT_FIELDS[i++] +
@@ -122,7 +131,7 @@ public class Controller implements Const {
             view.printlnMessage(View.OUTPUT_FIELDS[i++] + item.getComment());
             view.printlnMessage(View.OUTPUT_FIELDS[i++] +
                     item.getCreateDate());
-            if(item.getChangeDate() != null) {
+            if (item.getChangeDate() != null) {
                 view.printlnMessage(View.OUTPUT_FIELDS[i] +
                         item.getChangeDate());
             }

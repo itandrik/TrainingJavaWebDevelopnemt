@@ -62,7 +62,7 @@ public class Record {
      */
     public void setChangedFullName() {
         if (firstName != null && lastName != null) {
-            this.changedFullName = String.format("%s %c",
+            this.changedFullName = String.format("%s %c.",
                     lastName, firstName.charAt(0));
         }
     }
@@ -151,6 +151,13 @@ public class Record {
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         createDate = dateFormat.format(date.getTime());
+    }
+
+    /**
+     * Setting custom create date.
+     */
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
     /**

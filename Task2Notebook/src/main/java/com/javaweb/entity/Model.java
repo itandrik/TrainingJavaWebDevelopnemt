@@ -51,6 +51,7 @@ public class Model {
      * Deleting record from container.
      *
      * @param id - number of record to delete.
+     * @return count of deleted rows from Notebook.
      */
     public int deleteRecord(int id) {
         recordsList.remove(id - 1);

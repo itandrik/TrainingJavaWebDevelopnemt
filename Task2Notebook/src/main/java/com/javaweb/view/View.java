@@ -120,6 +120,9 @@ public class View {
      */
     public static final String DELETE_ROW =
             " rows deleted!!!";
+    /**
+     * Separating records in Erectronic Notebook
+     */
     public static final String BLOCK_SEPARATOR =
             "___________________________________________";
 

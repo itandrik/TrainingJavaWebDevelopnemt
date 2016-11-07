@@ -155,6 +155,8 @@ public class Record {
 
     /**
      * Setting custom create date.
+     *
+     * @param createDate - date of record creating(custom).
      */
     public void setCreateDate(String createDate) {
         this.createDate = createDate;

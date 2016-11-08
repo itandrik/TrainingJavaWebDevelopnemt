@@ -3,9 +3,7 @@ package com.javaweb.view;
 import com.javaweb.entity.LinearSystem;
 import com.javaweb.entity.Matrix;
 
-/**
- * Created by Dron on 08-Nov-16.
- */
+
 public class View {
     public static final String MATRIX_STRING =
             "Your matrix : ";
@@ -17,19 +15,43 @@ public class View {
             "%.3f\t";
     public static final String ROOTS_STRING =
             "Roots of your matrix are : ";
+    public static final String EMPTY_STRING =
+            "< empty >";
+    public static final String SEPARATOR_STRING =
+            "___________________________________";
+    public static final String ERROR_STRING =
+            "Error creating Matrix instance!";
 
-    public static final String REFLECTION_MATRIX =
-            "Matrix reflection : ";
+    public static final String MODIFIER_PUBLIC = "public";
+    public static final String MODIFIER_PRIVATE = "private";
+    public static final String MODIFIER_PROTECTED = "protected";
+    public static final String MODIFIER_FINAL = "final";
+    public static final String MODIFIER_ABSTRACT = "abstract";
+    public static final String MODIFIER_SYNCHRONIZED = "synchronized";
+    public static final String MODIFIER_STATIC = "static";
+
+    public static final String REFLECTION_STRING =
+            "Reflection : ";
     public static final String NAME_OF_CLASS_STRING =
             "Name of class : ";
+    public static final String NAME_OF_SUPERCLASS_STRING =
+            "Name of superclass : ";
     public static final String METHODS_STRING =
             "All methods : ";
-    public static final String METHODS_WITHOUT_ANNOTATION =
-            "All methods without annotation";
+    public static final String CALL_METHOD_WITH_ANNOTATION =
+            "%s method has annotation %s! Invoke this method!";
     public static final String LIST_OF_INTERFACES =
             "List of interfaces that implements this class : ";
     public static final String LIST_OF_FIELDS =
             "List all of declared fields in this class(only) : ";
+    public static final String FIELD_FORMATTER =
+            "Name of field : %s; Type : %s; Modifier : %s; Annotation : %s";
+
+    /**
+     * Message for InvocationException
+     */
+    public static final String INVOCATION_EXCEPTION_MESSAGE =
+            "ERROR : setters are not available, class immutable!!!";
 
     /**
      * @param message - array of strings for printing

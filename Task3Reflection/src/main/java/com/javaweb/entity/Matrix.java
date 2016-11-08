@@ -1,16 +1,17 @@
 package com.javaweb.entity;
 
 
-import com.javaweb.entity.annotations.FieldUsable;
-import com.javaweb.entity.annotations.FinaliseVariable;
-import com.javaweb.entity.annotations.MethodUsable;
+import com.javaweb.annotations.FieldUsable;
+import com.javaweb.annotations.FinaliseVariable;
+import com.javaweb.annotations.MethodUsable;
+import com.javaweb.entity.interfaces.IMatrix;
 
 import javax.naming.SizeLimitExceededException;
 import java.util.Arrays;
 
-public class Matrix {
+public class Matrix implements IMatrix{
     @FinaliseVariable
-    public static final int DEFAULT_MATRIX_SIZE = 4;
+    private static final int DEFAULT_MATRIX_SIZE = 4;
 
     @FieldUsable
     private double[][] matrix;
@@ -56,7 +57,6 @@ public class Matrix {
         return matrix;
     }
 
-    @MethodUsable(enabled = true)
     private double calculateDeterminant(double matrix[][], int n) {
         determinant = 0;
         int sign = 1;
@@ -89,10 +89,12 @@ public class Matrix {
         return determinant;
     }
 
+    @MethodUsable(enabled = true)
     public double getDeterminant() {
         return determinant;
     }
 
+    @MethodUsable(enabled = true)
     public int getMatrixSize() {
         return matrixSize;
     }

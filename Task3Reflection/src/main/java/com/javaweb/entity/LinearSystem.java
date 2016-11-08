@@ -1,11 +1,12 @@
 package com.javaweb.entity;
 
-import com.javaweb.entity.annotations.FieldUsable;
-import com.javaweb.entity.annotations.MethodUsable;
+
+import com.javaweb.annotations.FieldUsable;
+import com.javaweb.annotations.MethodUsable;
+import com.javaweb.entity.interfaces.ILinearSystem;
 
 import java.util.Arrays;
-
-public class LinearSystem extends Matrix implements Solvable {
+public final class LinearSystem extends Matrix implements ILinearSystem {
     @FieldUsable
     private double[] colFreeTerms;
     @FieldUsable
@@ -20,6 +21,15 @@ public class LinearSystem extends Matrix implements Solvable {
         super(matrix);
         this.colFreeTerms = colFreeTerms;
         this.linearSystem = createLinearSystem();
+    }
+
+    @MethodUsable()
+    public void setColFreeTerms(double[] colFreeTerms) {
+        this.colFreeTerms = colFreeTerms;
+    }
+    @MethodUsable()
+    public void setLinearSystem(double[][] linearSystem) {
+        this.linearSystem = linearSystem;
     }
 
     @MethodUsable(enabled = true)

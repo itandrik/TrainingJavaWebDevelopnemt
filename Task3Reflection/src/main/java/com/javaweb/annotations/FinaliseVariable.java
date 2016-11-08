@@ -1,4 +1,4 @@
-package com.javaweb.entity.annotations;
+package com.javaweb.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

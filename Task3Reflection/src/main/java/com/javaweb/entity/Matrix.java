@@ -1,12 +1,21 @@
 package com.javaweb.entity;
 
 
+import com.javaweb.entity.annotations.FieldUsable;
+import com.javaweb.entity.annotations.FinaliseVariable;
+import com.javaweb.entity.annotations.MethodUsable;
+
 import javax.naming.SizeLimitExceededException;
+import java.util.Arrays;
 
 public class Matrix {
-
+    @FinaliseVariable
     public static final int DEFAULT_MATRIX_SIZE = 4;
+
+    @FieldUsable
     private double[][] matrix;
+
+    @FieldUsable
     private double determinant;
     private int matrixSize;
 
@@ -37,14 +46,17 @@ public class Matrix {
         determinant = calculateDeterminant(matrix,matrixSize);
     }
 
+    @MethodUsable()
     public void setMatrix(double[][] matrix) {
         this.matrix = matrix;
     }
 
+    @MethodUsable(enabled = true)
     public double[][] getMatrix() {
         return matrix;
     }
 
+    @MethodUsable(enabled = true)
     private double calculateDeterminant(double matrix[][], int n) {
         determinant = 0;
         int sign = 1;
@@ -93,6 +105,39 @@ public class Matrix {
             System.arraycopy(matrix[i], 0, newMatrix[i], 0, matrix.length);
         }
         return newMatrix;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Matrix matrix1 = (Matrix) o;
+
+        if (Double.compare(matrix1.determinant, determinant) != 0) return false;
+        if (matrixSize != matrix1.matrixSize) return false;
+        return Arrays.deepEquals(matrix, matrix1.matrix);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = Arrays.deepHashCode(matrix);
+        temp = Double.doubleToLongBits(determinant);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + matrixSize;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Matrix{" +
+                "matrix=" + Arrays.toString(matrix) +
+                ", determinant=" + determinant +
+                ", matrixSize=" + matrixSize +
+                '}';
     }
 }
 

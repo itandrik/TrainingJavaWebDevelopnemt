@@ -18,6 +18,19 @@ public class View {
     public static final String ROOTS_STRING =
             "Roots of your matrix are : ";
 
+    public static final String REFLECTION_MATRIX =
+            "Matrix reflection : ";
+    public static final String NAME_OF_CLASS_STRING =
+            "Name of class : ";
+    public static final String METHODS_STRING =
+            "All methods : ";
+    public static final String METHODS_WITHOUT_ANNOTATION =
+            "All methods without annotation";
+    public static final String LIST_OF_INTERFACES =
+            "List of interfaces that implements this class : ";
+    public static final String LIST_OF_FIELDS =
+            "List all of declared fields in this class(only) : ";
+
     /**
      * @param message - array of strings for printing
      *                to console without next line symbol.

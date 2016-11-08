@@ -4,6 +4,8 @@ import com.javaweb.entity.LinearSystem;
 import com.javaweb.entity.Matrix;
 import com.javaweb.view.View;
 
+import static com.javaweb.controller.GlobalVariables.COLUMN_FREE_TERMS;
+
 
 public class Controller {
     View view;
@@ -13,12 +15,15 @@ public class Controller {
     }
 
     public void processUser() {
-        double[][] arrayMatrix = {{14, 7, 18, 12}, {3, 38, 20, 14}, {0, 7, 19, 11}, {1, 18, 6, 3}};
-        Matrix matrix = new Matrix(arrayMatrix);
+
+        Matrix matrix = new Matrix(GlobalVariables.ARRAY_MATRIX);
         view.showMatrix(matrix);
-        view.printlnMessage(View.DETERMINANT_STRING + matrix.getDeterminant());
-        double[] colFreeTerms = {139, 222, 111, -83};
-        LinearSystem linearSystem = new LinearSystem(arrayMatrix, colFreeTerms);
+        view.printlnMessage(View.DETERMINANT_STRING +
+                matrix.getDeterminant());
+
+        LinearSystem linearSystem = new LinearSystem(
+                GlobalVariables.ARRAY_MATRIX,
+                GlobalVariables.COLUMN_FREE_TERMS);
         view.showMatrix(linearSystem);
         view.showRootsLinearSystem(linearSystem.getSolve());
         view.showMatrix(linearSystem);

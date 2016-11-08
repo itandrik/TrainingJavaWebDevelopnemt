@@ -1,7 +1,14 @@
 package com.javaweb.entity;
 
+import com.javaweb.entity.annotations.FieldUsable;
+import com.javaweb.entity.annotations.MethodUsable;
+
+import java.util.Arrays;
+
 public class LinearSystem extends Matrix implements Solvable {
+    @FieldUsable
     private double[] colFreeTerms;
+    @FieldUsable
     private double[][] linearSystem;
 
     public LinearSystem() {
@@ -15,6 +22,7 @@ public class LinearSystem extends Matrix implements Solvable {
         this.linearSystem = createLinearSystem();
     }
 
+    @MethodUsable(enabled = true)
     private double[][] createLinearSystem() {
         double[][] linearSystem = new double[getMatrixSize()][getMatrixSize()+1];
         for (int i = 0; i < getMatrixSize(); i++) {
@@ -28,6 +36,7 @@ public class LinearSystem extends Matrix implements Solvable {
         return linearSystem;
     }
 
+    @MethodUsable(enabled = true)
     public double[] getSolve() {
         int row = getMatrixSize();
         int col = getMatrixSize() + 1;
@@ -52,7 +61,36 @@ public class LinearSystem extends Matrix implements Solvable {
         return roots;
     }
 
+    @MethodUsable(enabled = true)
     public double[][] getLinearSystem() {
         return linearSystem;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        LinearSystem that = (LinearSystem) o;
+
+        return Arrays.equals(colFreeTerms, that.colFreeTerms);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + Arrays.hashCode(colFreeTerms);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getCanonicalName() + "{" +
+                "colFreeTerms=" + Arrays.toString(colFreeTerms) +
+                ", linearSystem=" + Arrays.toString(linearSystem) +
+                '}';
     }
 }

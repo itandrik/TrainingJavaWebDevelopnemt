@@ -33,4 +33,17 @@ Tasks for Java courses
   
   Need to make Notebook with this records. Program code should include javaDOC and 
   java code under JCC.
+3. Task 3 : 
+  Inheritance and Reflection API.
+  
+  Variant #5. Create Parent class Matrix with determinant getter, and Child class LinearSystem, 
+  which extends Matrix and has free terms and solve linear equation system.
+  
+  * Show constructors using, create some interfaces, constants of enum.
+  * Create annotation and use with method this one.
+  * Using reflection write name of class, list of interfaces, which implements class, and list of fields with types and annotations
+  * Make Proxy (for Immutability), which skip getters and throws exceptions on setters.
+  * Write Unit tests for Proxy.
+  * Write Proxy for mock.
+  
   

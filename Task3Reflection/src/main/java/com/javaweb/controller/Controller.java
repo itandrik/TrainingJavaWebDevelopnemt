@@ -58,6 +58,10 @@ public class Controller {
         reflectionRunner.showMatrixReflection(linearSystem);
     }
 
+    /**
+     * Here is creating of proxy. Using proxy you can't use any
+     * setter, due to InvocationHandler
+     */
     private void extraTask1ProxySetters() {
         IMatrix matrixProxy = (IMatrix) Proxy.newProxyInstance(
                 Matrix.class.getClassLoader(),

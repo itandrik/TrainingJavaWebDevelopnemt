@@ -9,26 +9,55 @@ import com.javaweb.entity.interfaces.IMatrix;
 import javax.naming.SizeLimitExceededException;
 import java.util.Arrays;
 
-public class Matrix implements IMatrix{
+/**
+ * It is class for working with matrix.
+ * Using this class, you can find determinant of matrix.
+ * In the future here will be simple matrix operations.
+ *
+ * @author Andrii Chernysh
+ * @version 1.0
+ * @since 09 Nov 2016
+ */
+public class Matrix implements IMatrix {
+    /**
+     * Size of matrix by default.
+     */
     @FinaliseVariable
     private static final int DEFAULT_MATRIX_SIZE = 4;
 
+    /**
+     * Matrix array
+     */
     @FieldUsable
     private double[][] matrix;
 
     @FieldUsable
     private double determinant;
+    /**
+     * Custom matrix size
+     */
     private int matrixSize;
 
+    /**
+     * Default constructor of class Matrix.
+     * If this constructor called,
+     * matrix with zeros will be created.
+     */
     public Matrix() {
         matrixSize = DEFAULT_MATRIX_SIZE;
         matrix = new double[matrixSize][matrixSize];
-        determinant = calculateDeterminant(matrix,matrixSize);
+        determinant = calculateDeterminant(matrix, matrixSize);
     }
 
+    /**
+     * Custom constructor of Matrix. Fill matrix by values from
+     * parameter.
+     *
+     * @param matrix array with numbers for matrix.
+     */
     public Matrix(double[][] matrix) {
         for (int i = 0; i < matrix.length; i++) {
-            if(matrix[i].length != matrix.length){
+            if (matrix[i].length != matrix.length) {
                 try {
                     throw new SizeLimitExceededException();
                 } catch (SizeLimitExceededException e) {
@@ -41,12 +70,22 @@ public class Matrix implements IMatrix{
         determinant = calculateDeterminant(matrix, matrixSize);
     }
 
-    public Matrix(int matrixSize){
+    /**
+     * Creating matrix with custom size and zeros.
+     *
+     * @param matrixSize size of matrix
+     */
+    public Matrix(int matrixSize) {
         matrixSize = matrix.length;
         matrix = new double[matrixSize][matrixSize];
-        determinant = calculateDeterminant(matrix,matrixSize);
+        determinant = calculateDeterminant(matrix, matrixSize);
     }
 
+    /**
+     * Default setter for array {@link #matrix}
+     *
+     * @param matrix array of double
+     */
     @MethodUsable()
     public void setMatrix(double[][] matrix) {
         this.matrix = matrix;
@@ -57,6 +96,11 @@ public class Matrix implements IMatrix{
         return matrix;
     }
 
+    /**
+     * @param matrix matrix, which you want to calculate determinant
+     * @param n - some parameter for recursive calls
+     * @return determinant value
+     */
     private double calculateDeterminant(double matrix[][], int n) {
         determinant = 0;
         int sign = 1;

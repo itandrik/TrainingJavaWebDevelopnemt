@@ -1,7 +1,13 @@
 package com.javaweb.controller;
 
 /**
- * Created by Dron on 08-Nov-16.
+ * Here are some intefface with constants for our
+ * controller. Mostly here are only some matrix and
+ * linear systems.
+ *
+ * @author Andrii Chernysh
+ * @version 1.0
+ * @since 09 Nov 2016
  */
 public interface GlobalVariables {
     double[][] ARRAY_MATRIX = {

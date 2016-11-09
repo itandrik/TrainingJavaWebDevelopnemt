@@ -8,14 +8,41 @@ import com.javaweb.view.View;
 import java.lang.reflect.*;
 import java.util.Arrays;
 
+/**
+ * Class that shows reflection for VARIANT #5.
+ * It shows methods, their modifiers, annotations and
+ * invocation of methods with special annotation.
+ * Name of class, interfaces, that some class implements,
+ * fields and their modifiers, annotations. And more, using
+ * Reflection API.
+ *
+ * @author Andrii Chernysh
+ * @version 1.0
+ * @since 09 Nov 2016
+ */
 public class ReflectionRunner {
+    /**
+     * View instance for creating UI.
+     */
     private View view;
 
+    /**
+     * Only one constructor for initialising
+     * view and creating object of {@link ReflectionRunner}
+     *
+     * @param view instance of {@link View}
+     */
     public ReflectionRunner(View view) {
         this.view = view;
     }
 
-    public void showMatrixReflection(Matrix matrixObject) {
+    /**
+     * Show all reflection fields, methods, interfaces and invokation
+     * of methods with special annotation
+     *
+     * @param matrixObject instance of Matrix or LinearSystem.
+     */
+    public void showReflection(Matrix matrixObject) {
         view.printlnMessage(View.REFLECTION_STRING);
         Class matrixClass = createInstanceFromConstructor(matrixObject);
         if (matrixClass == null) {
@@ -42,6 +69,15 @@ public class ReflectionRunner {
         view.printlnMessage(View.SEPARATOR_STRING);
     }
 
+    /**
+     * If matrix instance in NULL, we should create new instance.
+     * Here we create new instance using reflection of constructors.
+     *
+     * @param matrixObject instance of {@link Matrix} or
+     *                     {@link com.javaweb.entity.LinearSystem}
+     * @return Class of of {@link Matrix} or
+     * {@link com.javaweb.entity.LinearSystem}
+     */
     private Class createInstanceFromConstructor(Matrix matrixObject) {
         if (matrixObject == null) {
 
@@ -65,6 +101,12 @@ public class ReflectionRunner {
         return null;
     }
 
+    /**
+     * Reflection if all interfaces, that implements some class.
+     *
+     * @param matrixClass class of of {@link Matrix} or
+     *                    {@link com.javaweb.entity.LinearSystem}
+     */
     private void showInterfacesOfClass(Class matrixClass) {
         view.printlnMessage(View.SEPARATOR_STRING);
         view.printMessage(View.LIST_OF_INTERFACES);
@@ -78,6 +120,13 @@ public class ReflectionRunner {
         }
     }
 
+    /**
+     * Recognising of modifier of some field.
+     *
+     * @param field some field of of {@link Matrix} or
+     *              {@link com.javaweb.entity.LinearSystem} class.
+     * @return string, that describe field modifier.
+     */
     private String getModifierFromField(Field field) {
         switch (field.getModifiers()) {
             case Modifier.PUBLIC:
@@ -99,6 +148,12 @@ public class ReflectionRunner {
         }
     }
 
+    /**
+     * Printing all fields from some class with modifiers.
+     *
+     * @param matrixClass class of of {@link Matrix} or
+     *                    {@link com.javaweb.entity.LinearSystem}
+     */
     private void showFieldsOfClass(Class matrixClass) {
         view.printlnMessage(View.SEPARATOR_STRING);
         view.printlnMessage(View.LIST_OF_FIELDS);
@@ -113,6 +168,16 @@ public class ReflectionRunner {
         }
     }
 
+    /**
+     * Method, that shows all methods from some class
+     * and invoke methods which are annotated by
+     * {@link MethodUsable} and {@link MethodUsable#enabled()} == true.
+     *
+     * @param matrixObject instance of {@link Matrix} or
+     *                     {@link com.javaweb.entity.LinearSystem}
+     * @param matrixClass  class of {@link Matrix} or
+     *                     {@link com.javaweb.entity.LinearSystem}
+     */
     private void callMethodsWithAnnotation(Matrix matrixObject, Class matrixClass) {
         view.printlnMessage(View.SEPARATOR_STRING);
         view.printlnMessage(View.METHODS_STRING);

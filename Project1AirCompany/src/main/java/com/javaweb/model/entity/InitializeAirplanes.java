@@ -1,25 +1,20 @@
 package com.javaweb.model.entity;
 
-import com.javaweb.model.entity.agricultural.AgriculturalAirplaneType;
-import com.javaweb.model.entity.freight.FreightAirplaneType;
-import com.javaweb.model.entity.passenger.PassengerAirplaneType;
-
 /**
  * Created by Dron on 13-Nov-16.
  */
 public enum InitializeAirplanes {
-    AN_2СХ(AgriculturalAirplaneType.BIPLANE, Aircraft.ManufacturerCountry.USSR,
-            1,254,true,2000,140,900,1,1980,1400,30,236,155);
+    AN_2СХ(AirplaneType.AGRICULTURAL_BIPLANE, Aircraft.ManufacturerCountry.USSR,
+            1,254,true,2000,140,900,1,1980,1400,30,236,155,-1,false,false, -1,-1,
+            -1,-1,false,-1,false,-1);
 
-    private final AgriculturalAirplaneType agriculturalAirplaneType;
-    private final PassengerAirplaneType passengerAirplaneType;
-    private final FreightAirplaneType freightAirplaneType;
-    //private final String name;
+
+    private final AirplaneType airplaneType;
     private final Aircraft.ManufacturerCountry manufacturerCountry;
     private final int engineQuantity;
     private final double maxSpeed;
     private final boolean hasPilot;
-    private final double price;
+    private final long price;
     private final double fuelConsumption;
     private final double rangeOfFlight;
     private final int passengerCapacity;
@@ -28,16 +23,33 @@ public enum InitializeAirplanes {
     private final double sprayingAreaSquare;
     private final double landingSpeed;
     private final double takeOffSpeed;
+    private final double freightWeight;
+    private final boolean isPostal;
+    private final boolean isUsingForJumping;
+    private final double unitLoadDeviceCapacity;
+    private final double quantityOfULD;
+    private final double fuselageDiameter;
+    private final double fuselageLength;
+    private final boolean hasWifi;
+    private final int capacityCarryOnLuggage;
+    private final boolean hasLunch;
+    private final int quantityOfStewardess;
 
-    InitializeAirplanes(AgriculturalAirplaneType agriculturalAirplaneType,
+
+    InitializeAirplanes(AirplaneType airplaneType,
                         Aircraft.ManufacturerCountry manufacturerCountry,
                         int engineQuantity, double maxSpeed, boolean hasPilot,
-                        double price, double fuelConsumption,
+                        long price, double fuelConsumption,
                         double rangeOfFlight, int passengerCapacity,
                         double carryingCapacity, double amountOfPesticides,
                         double sprayingAreaSquare, double landingSpeed,
-                        double takeOffSpeed) {
-        this.agriculturalAirplaneType = agriculturalAirplaneType;
+                        double takeOffSpeed, double freightWeight,
+                        boolean isUsingForJumping, boolean isPostal,
+                        double unitLoadDeviceCapacity, double quantityOfULD,
+                        double fuselageDiameter,double fuselageLength,
+                        boolean hasWifi, int capacityCarryOnLuggage,
+                        boolean hasLunch,int quantityOfStewardess){
+        this.airplaneType = airplaneType;
         this.manufacturerCountry = manufacturerCountry;
         this.engineQuantity = engineQuantity;
         this.maxSpeed = maxSpeed;
@@ -51,10 +63,17 @@ public enum InitializeAirplanes {
         this.sprayingAreaSquare = sprayingAreaSquare;
         this.landingSpeed = landingSpeed;
         this.takeOffSpeed = takeOffSpeed;
-    }
-
-    public AgriculturalAirplaneType getAgriculturalAirplaneType() {
-        return agriculturalAirplaneType;
+        this.freightWeight = freightWeight;
+        this.isPostal = isPostal;
+        this.isUsingForJumping = isUsingForJumping;
+        this.unitLoadDeviceCapacity = unitLoadDeviceCapacity;
+        this.quantityOfULD = quantityOfULD;
+        this.fuselageDiameter = fuselageDiameter;
+        this.fuselageLength = fuselageLength;
+        this.hasWifi = hasWifi;
+        this.capacityCarryOnLuggage = capacityCarryOnLuggage;
+        this.hasLunch = hasLunch;
+        this.quantityOfStewardess = quantityOfStewardess;
     }
 
     public Aircraft.ManufacturerCountry getManufacturerCountry() {
@@ -69,11 +88,11 @@ public enum InitializeAirplanes {
         return maxSpeed;
     }
 
-    public boolean isHasPilot() {
+    public boolean hasPilot() {
         return hasPilot;
     }
 
-    public double getPrice() {
+    public long getPrice() {
         return price;
     }
 
@@ -93,6 +112,10 @@ public enum InitializeAirplanes {
         return carryingCapacity;
     }
 
+    public AirplaneType getAirplaneType() {
+        return airplaneType;
+    }
+
     public double getAmountOfPesticides() {
         return amountOfPesticides;
     }
@@ -109,11 +132,47 @@ public enum InitializeAirplanes {
         return takeOffSpeed;
     }
 
-    public PassengerAirplaneType getPassengerAirplaneType() {
-        return passengerAirplaneType;
+    public double getFreightWeight() {
+        return freightWeight;
     }
 
-    public FreightAirplaneType getFreightAirplaneType() {
-        return freightAirplaneType;
+    public boolean isPostal() {
+        return isPostal;
+    }
+
+    public boolean isUsingForJumping() {
+        return isUsingForJumping;
+    }
+
+    public double getUnitLoadDeviceCapacity() {
+        return unitLoadDeviceCapacity;
+    }
+
+    public double getQuantityOfULD() {
+        return quantityOfULD;
+    }
+
+    public double getFuselageDiameter() {
+        return fuselageDiameter;
+    }
+
+    public double getFuselageLength() {
+        return fuselageLength;
+    }
+
+    public boolean hasWifi() {
+        return hasWifi;
+    }
+
+    public int getCapacityCarryOnLuggage() {
+        return capacityCarryOnLuggage;
+    }
+
+    public boolean hasLunch() {
+        return hasLunch;
+    }
+
+    public int getQuantityOfStewardess() {
+        return quantityOfStewardess;
     }
 }

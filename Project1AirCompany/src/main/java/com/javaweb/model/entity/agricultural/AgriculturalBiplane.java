@@ -9,18 +9,6 @@ public class AgriculturalBiplane extends AgriculturalAirplane {
 
     public AgriculturalBiplane(InitializeAirplanes init) {
         super(init);
-        setName(init.name());
-        setManufacturerCountry(init.getManufacturerCountry());
-        setEngineQuantity(init.getEngineQuantity());
-        setPassengerCapacity(init.getPassengerCapacity());
-        setCarryingCapacity(init.getCarryingCapacity());
-        setMaxSpeed(init.getMaxSpeed());
-        setHasPilot(init.isHasPilot());
-        setPrice(init.getPrice());
-        setFuelConsumption(init.getFuelConsumption());
-        setRangeOfFlight(init.getRangeOfFlight());
-        this.amountOfPesticides = init.getAmountOfPesticides();
-        this.sprayingAreaSquare = init.getSprayingAreaSquare();
         setLandingSpeed(init.getLandingSpeed());
         setTakeOffSpeed(init.getTakeOffSpeed());
     }

@@ -23,10 +23,10 @@ public class AgriculturalAirplaneFactory implements AircraftFactory {
     @Override
     public AgriculturalAirplane getAgriculturalAirplane(
             InitializeAirplanes initValues) {
-        switch (initValues.getAgriculturalAirplaneType()) {
-            case BIPLANE:
+        switch (initValues.getAirplaneType()) {
+            case AGRICULTURAL_BIPLANE:
                 return new AgriculturalBiplane(initValues);
-            case MONOPLANE:
+            case AGRICULTURAL_MONOPLANE:
                 return new AgriculturalMonoplane(initValues);
             default:
                 return null;

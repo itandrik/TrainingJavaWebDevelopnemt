@@ -10,7 +10,10 @@ public abstract class AgriculturalAirplane extends Aircraft {
     protected double landingSpeed;
     protected double takeOffSpeed;
 
-    public AgriculturalAirplane(InitializeAirplanes init){
+    public AgriculturalAirplane(InitializeAirplanes init) {
+        super(init);
+        this.amountOfPesticides = init.getAmountOfPesticides();
+        this.sprayingAreaSquare = init.getSprayingAreaSquare();
     }
 
     public double getAmountOfPesticides() {

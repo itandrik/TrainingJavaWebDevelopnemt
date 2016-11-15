@@ -4,8 +4,6 @@ import com.javaweb.model.entity.InitializeAirplanes;
 import com.javaweb.model.entity.agricultural.AgriculturalAirplane;
 import com.javaweb.model.entity.freight.FreightAirplane;
 import com.javaweb.model.entity.passenger.PassengerAirplane;
-import com.javaweb.model.entity.passenger.PassengerNarrowFuselage;
-import com.javaweb.model.entity.passenger.PassengerWideFuselage;
 
 
 public class PassengerAirplaneFactory implements AircraftFactory {
@@ -17,11 +15,11 @@ public class PassengerAirplaneFactory implements AircraftFactory {
 
     @Override
     public PassengerAirplane getPassengerAirplane(InitializeAirplanes initValues) {
-        switch (initValues.getPassengerAirplaneType()){
-            case NARROW_FUSELAGE:
-                return new PassengerNarrowFuselage();
-            case WIDE_FUSELAGE:
-                return new PassengerWideFuselage();
+        switch (initValues.getAirplaneType()){
+            case PASSENGER_NARROW:
+                return PassengerAirplane.getInstancePassengerAirplane(initValues);
+            case PASSENGER_WIDE:
+                return PassengerAirplane.getInstancePassengerAirplane(initValues);
             default:
                 return null;
         }

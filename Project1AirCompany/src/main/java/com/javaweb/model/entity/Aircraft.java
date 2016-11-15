@@ -10,7 +10,7 @@ public abstract class Aircraft {
     private int engineQuantity;//Inner class with engine
     private double maxSpeed;
     private boolean hasPilot;
-    private double price;
+    private long price;
     private double fuelConsumption;
     private double rangeOfFlight;
     private int passengerCapacity;
@@ -21,6 +21,19 @@ public abstract class Aircraft {
      */
     public enum ManufacturerCountry {
         USSR, FRANCE, USA, GERMANY
+    }
+
+    public Aircraft(InitializeAirplanes init) {
+        setName(init.name());
+        setManufacturerCountry(init.getManufacturerCountry());
+        setEngineQuantity(init.getEngineQuantity());
+        setPassengerCapacity(init.getPassengerCapacity());
+        setCarryingCapacity(init.getCarryingCapacity());
+        setMaxSpeed(init.getMaxSpeed());
+        setHasPilot(init.hasPilot());
+        setPrice(init.getPrice());
+        setFuelConsumption(init.getFuelConsumption());
+        setRangeOfFlight(init.getRangeOfFlight());
     }
 
     public void setName(String name) {
@@ -43,7 +56,7 @@ public abstract class Aircraft {
         this.hasPilot = hasPilot;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
@@ -83,7 +96,7 @@ public abstract class Aircraft {
         return hasPilot;
     }
 
-    public double getPrice() {
+    public long getPrice() {
         return price;
     }
 

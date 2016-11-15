@@ -14,5 +14,7 @@ public class Main {
         System.out.println(arrUtil.findNonEqualsNonSorted(array1,array2));
         System.out.println(arrUtil.findNonEqualsWithCollection(array1,array2));
         System.out.println(arrUtil.findNonEqualsSorted(array1,array2));
+        System.out.println(arrUtil.equals(null));
+
     }
 }

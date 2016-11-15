@@ -45,5 +45,8 @@ Tasks for Java courses
   * Make Proxy (for Immutability), which skip getters and throws exceptions on setters.
   * Write Unit tests for Proxy.
   * Write Proxy for mock.
-  
+4. Task 4:
+  Finding non-equals elements in two arrays.
+5. Task 5:
+  Sorting array by quantity of elements' occurrence.
   

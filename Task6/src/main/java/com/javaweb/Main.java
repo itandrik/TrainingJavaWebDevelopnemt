@@ -1,16 +1,20 @@
 package com.javaweb;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Created by Dron on 20-Nov-16.
+ * Main.java
+ * <p>
+ * Test methods from custom ArrayList {@link MyArrayList}.
+ *
+ * @author Andrii Chernysh
+ * @version 1.0, 20 Nov 2016
  */
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Integer> al =  new ArrayList<>(Arrays.asList(1,2,3,4,5,6,1,8));
+        MyArrayList<Integer> al =  new MyArrayList<>(Arrays.asList(1,2,3,4,5,6,1,8));
         System.out.println(al.subList(3,5).toString());
-        al.remove(1);
+        al.retainAll(Arrays.asList(1,3,4,11,12,13));
         System.out.println(al.toString());
     }
 }

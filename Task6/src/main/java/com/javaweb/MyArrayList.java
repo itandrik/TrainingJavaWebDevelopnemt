@@ -3,6 +3,17 @@ package com.javaweb;
 
 import java.util.*;
 
+/**
+ * MyArrayList.java
+ * <p>
+ * This is class of custom ArrayList. It implements List interface.
+ * It has all basic methods include getting iterator.
+ * It works with different types, because of generic type.
+ *
+ * @param <E> generic type
+ * @author Andrii Chernysh
+ * @version 1.0, 20 Nov 2016
+ */
 public class MyArrayList<E> implements List<E> {
     private static final int DEFAULT_CAPACITY = 10;
     private static final String OUT_OF_BOUND_MSG =
@@ -13,6 +24,8 @@ public class MyArrayList<E> implements List<E> {
     private int size = 0;
     private int previousCapacity = 0;
 
+    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
     public MyArrayList() {
         this(DEFAULT_CAPACITY);
     }
@@ -22,7 +35,25 @@ public class MyArrayList<E> implements List<E> {
         data = new Object[initialCapacity];
     }
 
-    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+    /**
+     * Constructs a list containing the elements of the specified
+     * collection, in the order they are returned by the collection's
+     * iterator.
+     *
+     * @param c the collection whose elements are to be placed into this list
+     * @throws NullPointerException if the specified collection is null
+     */
+    public MyArrayList(Collection<? extends E> c) {
+        data = c.toArray();
+        if ((size = data.length) != 0) {
+            // c.toArray might (incorrectly) not return Object[] (see 6260652)
+            if (data.getClass() != Object[].class)
+                data = Arrays.copyOf(data, size, Object[].class);
+        } else {
+            // replace with empty array.
+            this.data = new Object[]{};
+        }
+    }
 
     /**
      * Method for testing purposes
@@ -34,9 +65,9 @@ public class MyArrayList<E> implements List<E> {
     }
 
     private void ensureCapacityAdd(int size) {
-        if (size == data.length) {
-            previousCapacity = size;
-            int newCapacity = (size * 3) / 2 + 1;
+        if (size >= data.length) {
+            previousCapacity = data.length;
+            int newCapacity = (data.length * 3) / 2 + 1;
             if (newCapacity >= MAX_ARRAY_SIZE) {
                 throw new OutOfMemoryError(OUT_OF_MEMORY_MSG);
             } else {
@@ -81,7 +112,7 @@ public class MyArrayList<E> implements List<E> {
                 if (data[i] == null)
                     return i;
         } else {
-            for (int i = size-1; i >= 0; i--)
+            for (int i = size - 1; i >= 0; i--)
                 if (o.equals(data[i]))
                     return i;
         }
@@ -134,13 +165,7 @@ public class MyArrayList<E> implements List<E> {
     }
 
     public boolean contains(Object o) {
-        Objects.requireNonNull(o);
-        for (Object element : data) {
-            if (element.equals(o)) {
-                return true;
-            }
-        }
-        return false;
+        return indexOf(o) >= 0;
     }
 
     public boolean add(E o) {
@@ -193,7 +218,7 @@ public class MyArrayList<E> implements List<E> {
     public boolean addAll(Collection c) {
         Object[] a = c.toArray();
         int numNew = a.length;
-        ensureCapacityAdd(size + numNew);  // Increments modCount
+        ensureCapacityAdd(size + numNew);
         System.arraycopy(a, 0, data, size, numNew);
         size += numNew;
         return numNew != 0;
@@ -205,7 +230,7 @@ public class MyArrayList<E> implements List<E> {
 
         Object[] a = c.toArray();
         int numNew = a.length;
-        ensureCapacityAdd(size + numNew);  // Increments modCount
+        ensureCapacityAdd(size + numNew);
 
         int numMoved = size - index;
         if (numMoved > 0)
@@ -221,9 +246,11 @@ public class MyArrayList<E> implements List<E> {
     public boolean retainAll(Collection c) {
         for (int i = 0; i < size; i++) {
             if (!c.contains(data[i])) {
-                this.remove(i);
+                this.remove(i--);
+                ensureCapacityRemove(size);
             }
         }
+
         /*this.stream().forEach(elem ->{
             if(!c.contains(elem)){
                 this.remove(elem);
@@ -265,6 +292,11 @@ public class MyArrayList<E> implements List<E> {
         if (a.length > size)
             a[size] = null;
         return a;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(this.toArray());
     }
 
     @Override

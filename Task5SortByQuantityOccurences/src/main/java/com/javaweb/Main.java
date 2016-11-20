@@ -13,6 +13,7 @@ public class Main {
         //12,6,1,1,2,2,3,3,5,5,8,8,4,4,4,7,7,7
 
         sortByQuantityOccurrences(array);
+        sortByQuantityOccurrencesWithStream(array);
     }
 
     /**
@@ -72,10 +73,8 @@ public class Main {
 
     /**
      * Firstly, we should create HashMap, where key - element,
-     * value - number of occurrences. Secondly, we should make
-     * TreeMap<Integer,Set<Integer>>, where key - number of occurrences,
-     * value - set of elements, which has such quantity of occurrences.
-     * Next we just create List with our result
+     * value - number of occurrences. Secondly, using Stream API we
+     * sort by number occurrences and add to values result vector.
      *
      * @param array Array to sort
      */
@@ -87,43 +86,25 @@ public class Main {
          * value - number of occurrences. */
         Arrays.stream(array)
                 .forEach((elem) -> {
-            if (occurrenceMap.containsKey(elem)) {
-                occurrenceMap.replace(elem, occurrenceMap.get(elem),
-                        occurrenceMap.get(elem) + 1);
-            } else {
-                occurrenceMap.put(elem, 1);
-            }
-        });
+                    if (occurrenceMap.containsKey(elem)) {
+                        occurrenceMap.replace(elem, occurrenceMap.get(elem),
+                                occurrenceMap.get(elem) + 1);
+                    } else {
+                        occurrenceMap.put(elem, 1);
+                    }
+                });
 
-        /* Secondly, we should make
-         * TreeMap<Integer,Set<Integer>>, where key - number of occurrences,
-         * value - set of elements, which has such quantity of occurrences. */
-        for (Integer elem : occurrenceMap.keySet()) {
-            if (!occurrenceTree.containsKey(occurrenceMap.get(elem))) {
-                Set<Integer> set = new HashSet<>();
-                set.add(elem);
-                occurrenceTree.put(occurrenceMap.get(elem), set);
-            } else {
-                occurrenceTree.get(occurrenceMap.get(elem)).add(elem);
-            }
-        }
-
-        // Simple show message to see is all right.
-        for (Integer i : occurrenceTree.keySet()) {
-            System.out.println("occurrence number : " + i);
-            System.out.println("Set : " + occurrenceTree.get(i).toString());
-        }
-        // Next we just create List with our result
-        List<Integer> result = new ArrayList<>();
-        for (Integer occurrenceNumber : occurrenceTree.keySet()) {
-            for (Integer setElement : occurrenceTree.get(occurrenceNumber)) {
-                for (int i = 0; i < occurrenceNumber; i++) {
-                    result.add(setElement);
-                }
-            }
-        }
-
+        ArrayList<Integer> result = new ArrayList<>();
+        occurrenceMap.entrySet().stream()
+                .sorted((o1, o2) -> o1.getValue() >= o2.getValue() ? 1 : -1)
+                .forEach(elem -> {
+                    for (int i = 0; i < elem.getValue(); i++) {
+                        result.add(elem.getKey());
+                    }
+                });
+        
         // Writing to console
         System.out.println("Result array : " + result.toString());
+
     }
 }

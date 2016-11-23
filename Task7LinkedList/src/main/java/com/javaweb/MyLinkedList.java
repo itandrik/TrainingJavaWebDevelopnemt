@@ -3,15 +3,54 @@ package com.javaweb;
 import java.util.*;
 
 /**
- * @param <E>
+ * MyLinkedList.java
+ * <t>
+ * Class, that implements List<E> interface and has such
+ * logic as usual {@link LinkedList}. It has almost all
+ * similar methods.
+ *
+ * @param <E> generic type
+ * @author Andrii Chernysh
+ * @version 1.0, 22 Nov 2016
  */
 public class MyLinkedList<E> implements List<E> {
     private static final String INDEX_OUT_OF_BOUND_MSG =
             "Index %d is out of bound!!";
+    public static final String NO_SUCH_ELEMENT_MSG =
+            "No such element!!!";
+    /**
+     * Size of custom linked list
+     */
     private int size = 0;
+    /**
+     * Pointer to first element of linked list
+     */
     private Node<E> first;
+    /**
+     * Pointer to last element of linked list
+     */
     private Node<E> last;
+    /**
+     * This variable solver concurrency problems
+     */
+    private int modCount = 0;
 
+    public MyLinkedList() {
+
+    }
+
+    public MyLinkedList(Collection<? extends E> c) {
+        addAll(c);
+    }
+
+    /**
+     * All elements of our list has such structure,
+     * like this class.
+     * There are pointer to next and previous node and
+     * exactly value of generic type <E>.
+     *
+     * @param <E> generic type
+     */
     private static class Node<E> {
         E item;
         Node<E> next;
@@ -35,6 +74,7 @@ public class MyLinkedList<E> implements List<E> {
             last = newNode;
         else
             f.previous = newNode;
+        modCount++;
         size++;
     }
 
@@ -50,6 +90,7 @@ public class MyLinkedList<E> implements List<E> {
         else
             l.next = newNode;
         size++;
+        modCount++;
     }
 
     /**
@@ -65,6 +106,7 @@ public class MyLinkedList<E> implements List<E> {
         else
             pred.next = newNode;
         size++;
+        modCount++;
     }
 
     /**
@@ -82,6 +124,7 @@ public class MyLinkedList<E> implements List<E> {
         else
             next.previous = null;
         size--;
+        modCount++;
         return element;
     }
 
@@ -100,6 +143,7 @@ public class MyLinkedList<E> implements List<E> {
         else
             prev.next = null;
         size--;
+        modCount++;
         return element;
     }
 
@@ -128,14 +172,51 @@ public class MyLinkedList<E> implements List<E> {
 
         x.item = null;
         size--;
+        modCount++;
         return element;
     }
 
     private void checkIndex(int index) {
-        if (index < 0 && index > size) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException(
                     String.format(INDEX_OUT_OF_BOUND_MSG, index));
         }
+    }
+
+    public E getFirst() {
+        final Node<E> f = first;
+        if (f == null)
+            throw new NoSuchElementException(NO_SUCH_ELEMENT_MSG);
+        return f.item;
+    }
+
+    public E getLast() {
+        final Node<E> l = last;
+        if (l == null)
+            throw new NoSuchElementException(NO_SUCH_ELEMENT_MSG);
+        return l.item;
+    }
+
+    public E removeFirst() {
+        final Node<E> f = first;
+        if (f == null)
+            throw new NoSuchElementException(NO_SUCH_ELEMENT_MSG);
+        return unlinkFirst(f);
+    }
+
+    public E removeLast() {
+        final Node<E> l = last;
+        if (l == null)
+            throw new NoSuchElementException(NO_SUCH_ELEMENT_MSG);
+        return unlinkLast(l);
+    }
+
+    public void addFirst(E e) {
+        linkFirst(e);
+    }
+    
+    public void addLast(E e) {
+        linkLast(e);
     }
 
     @Override
@@ -157,7 +238,7 @@ public class MyLinkedList<E> implements List<E> {
     public Object[] toArray() {
         Object[] result = new Object[size];
         int i = 0;
-        for (Node iter = first; iter != null; iter = iter.next) {
+        for (Node<E> iter = first; iter != null; iter = iter.next) {
             result[i++] = iter.item;
         }
         return result;
@@ -224,33 +305,34 @@ public class MyLinkedList<E> implements List<E> {
         if (c.size() == 0)
             return false;
 
-        Node<E> previousNode;
-        Node<E> nextNode = null;
-        if (index == 0) {
-            E first = (E) c.stream().findFirst();
-            previousNode = new Node<>(null, first, null);
-        } else if (index == size) {
-            previousNode = this.last;
+        Node<E> predictNode, successiveNode;
+        if (index == size) {
+            successiveNode = null;
+            predictNode = last;
         } else {
-            previousNode = getNode(index);
-            nextNode = previousNode.next;
+            successiveNode = getNode(index);
+            predictNode = successiveNode.previous;
         }
 
-        for (E elem : c) {
-            Node<E> node = new Node<>(previousNode, elem, null);
-            previousNode.next = node;
-            previousNode = node;
+        for (Object o : c.toArray()) {
+            @SuppressWarnings("unchecked") E e = (E) o;
+            Node<E> newNode = new Node<>(predictNode, e, null);
+            if (predictNode == null)
+                first = newNode;
+            else
+                predictNode.next = newNode;
+            predictNode = newNode;
         }
 
-        if (index == 0) {
-            previousNode.next = this.first;
-        } else if (index == size) {
-            previousNode.next = null;
+        if (successiveNode == null) {
+            last = predictNode;
         } else {
-            previousNode.next = nextNode;
+            predictNode.next = successiveNode;
+            successiveNode.previous = predictNode;
         }
 
         size += c.size();
+        modCount++;
         return true;
     }
 
@@ -259,7 +341,6 @@ public class MyLinkedList<E> implements List<E> {
         c.stream().forEach(elem -> {
             while (this.contains(elem)) {
                 this.remove(this.indexOf(elem));
-                size--;
             }
         });
         return true;
@@ -271,9 +352,8 @@ public class MyLinkedList<E> implements List<E> {
         while (elem != null) {
             if (!c.contains(elem.item)) {
                 Node<E> temp = elem.next;
-                remove(elem);
+                unlink(elem);
                 elem = temp;
-                size--;
             } else {
                 elem = elem.next;
             }
@@ -336,7 +416,7 @@ public class MyLinkedList<E> implements List<E> {
     public E remove(int index) {
         Node<E> temp = getNode(index);
         E result = temp.item;
-        remove(temp);
+        unlink(temp);
         return result;
     }
 
@@ -409,10 +489,16 @@ public class MyLinkedList<E> implements List<E> {
         }
     }
 
+    /**
+     * Custom iterator for {@link MyLinkedList}
+     *
+     * @param <E> generic type
+     */
     private class MyIterator<E> implements Iterator<E> {
         protected Node<E> lastReturned;
         protected Node<E> next;
         protected int index;
+
 
         public MyIterator(int index) {
             next = (index == size) ? null : (Node<E>) getNode(index);
@@ -434,7 +520,15 @@ public class MyLinkedList<E> implements List<E> {
             return lastReturned.item;
         }
     }
-    private class MyListIterator<E> extends MyIterator<E> implements ListIterator<E>{
+
+    /**
+     * Custom list iterator for {@link MyLinkedList}.
+     * It extends custom iterator {@link MyIterator} and has
+     * more methods, which is needed to iterate custom
+     * linked list
+     */
+    private class MyListIterator extends MyIterator<E> implements ListIterator<E> {
+        private int expectedModCount = modCount;
 
         public MyListIterator(int index) {
             super(index);
@@ -449,9 +543,9 @@ public class MyLinkedList<E> implements List<E> {
         public E previous() {
             if (!hasPrevious())
                 throw new NoSuchElementException();
-            if(next == null){
-                next = (Node<E>)last;
-            }else{
+            if (next == null) {
+                next = last;
+            } else {
                 next = next.previous;
             }
             lastReturned = next;
@@ -466,22 +560,43 @@ public class MyLinkedList<E> implements List<E> {
 
         @Override
         public int previousIndex() {
-            return index-1;
+            return index - 1;
         }
 
         @Override
         public void remove() {
-
+            checkForComodification();
+            Node<E> lastNext = lastReturned.next;
+            unlink(lastReturned);
+            if (next == lastReturned)
+                next = lastNext;
+            else
+                index--;
+            lastReturned = null;
+            expectedModCount++;
         }
 
         @Override
         public void set(E e) {
-
+            checkForComodification();
+            lastReturned.item = e;
         }
 
         @Override
         public void add(E e) {
+            checkForComodification();
+            lastReturned = null;
+            if (next == null)
+                linkLast(e);
+            else
+                linkBefore(e, next);
+            index++;
+            expectedModCount++;
+        }
 
+        void checkForComodification() {
+            if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
         }
     }
 }

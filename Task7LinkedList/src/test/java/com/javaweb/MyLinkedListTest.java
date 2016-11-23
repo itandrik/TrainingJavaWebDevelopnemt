@@ -57,6 +57,7 @@ public class MyLinkedListTest {
     @Test
     public void subList() {
         List<Integer> list = linkedList.subList(3, 5);
+        System.out.println(list.toString());
         Assert.assertArrayEquals(list.toArray(),
                 Arrays.asList(4, 5).toArray());
     }

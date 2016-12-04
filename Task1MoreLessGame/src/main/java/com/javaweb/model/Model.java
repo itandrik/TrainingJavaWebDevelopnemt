@@ -115,8 +115,8 @@ public class Model {
         /*In standart case it is bigger probability
          to get incorrect input value
           */
-        if (guessNumber != inputNumber) {
-            if (guessNumber > inputNumber) {
+        if (getGuessNumber() != inputNumber) {
+            if (getGuessNumber() > inputNumber) {
                 leftLimit = inputNumber;        //Making limits for statistic
             } else {
                 rightLimit = inputNumber;

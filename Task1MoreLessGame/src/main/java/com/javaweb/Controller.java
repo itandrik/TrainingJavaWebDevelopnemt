@@ -29,6 +29,10 @@ public class Controller {
      * Object of view, which we initialise instantly in constructor
      */
     private View view;
+    /**
+     * Scanner to makes input from console
+     */
+    private ScannerAdapter scanner = new ScannerAdapter(new Scanner(System.in));
 
     /**
      * Default constructor with view object initializing
@@ -36,6 +40,7 @@ public class Controller {
     public Controller(View view) {
         this.view = view;
     }
+
 
     /**
      * Main function in this class.
@@ -45,19 +50,20 @@ public class Controller {
      * data, which we create during playing the game
      */
     public void run() {
-        /* Scanner to makes input from console */
-        Scanner scanner = new Scanner(Const.INPUT_STREAM);
+
         /* Header in console */
         view.printlnMessage(View.GREETING_STRING);
 
-        model = getModelFromMenu(scanner);
+        if(model == null) {
+            model = getModelFromMenu();
+        }
 
         view.printlnMessage(View.INPUT_INT_DATA_STRING,
                 String.valueOf(model.getLeftLimit()) +
                         BETWEEN_NUMBERS_STRING +
                         String.valueOf(model.getRightLimit()));
 
-        processUser(scanner);
+        processUser();
         showWinMessage();
     }
 
@@ -65,13 +71,11 @@ public class Controller {
      * One of the main procedure in controller.
      * It takes input number from console and check it
      * in the model class. Furthermore, it makes statistic array
-     *
-     * @param scanner Scanner object for console reading
      */
-    private void processUser(Scanner scanner){
+    private void processUser() {
         int inputValue;
         while (!model.isCorrectNumber(
-                inputValue = inputIntValueWithScanner(scanner))) {
+                inputValue = inputIntValueWithScanner())) {
             model.addToStatistic(inputValue);
             view.printIncorrectInputNumber(
                     model.getLeftLimit(),
@@ -80,7 +84,7 @@ public class Controller {
     }
 
     /**
-     * Writing message after {@link #processUser(Scanner)} loop
+     * Writing message after {@link #processUser()} loop
      */
     private void showWinMessage() {
         view.printlnMessage(View.WIN_STRING);
@@ -92,8 +96,7 @@ public class Controller {
     /**
      * Format printing of statistic of the game.
      *
-     * @param statisticArray array, which we
-     *                       take from model
+     * @param statisticArray array, which we take from model
      */
     private void showStatistic(List<Attempt> statisticArray)
             throws IndexOutOfBoundsException {
@@ -127,12 +130,11 @@ public class Controller {
      * 2 : default diapason for randomiser;
      * 3 : exit;
      *
-     * @param scanner Scanner object for console reading
      * @return model object based on menu item
      */
-    private Model getModelFromMenu(Scanner scanner) {
+    private Model getModelFromMenu() {
         /* Show menu in the console and choosing item */
-        int menuItem = inputValueWithScannerForMenu(scanner);
+        int menuItem = inputValueWithScannerForMenu();
         switch (menuItem) {
             /* Choosing custom limits and verifying min == max */
             case Const.FIRST_MENU_ITEM:
@@ -140,15 +142,15 @@ public class Controller {
                 int max;
                 do {
                     view.printlnMessage(View.ENTER_MINIMUM_STRING);
-                    min = inputIntValueWithScanner(scanner);
+                    min = inputIntValueWithScanner();
                     view.printlnMessage(View.ENTER_MAXIMUM_STRING);
-                    max = inputIntValueWithScanner(scanner);
+                    max = inputIntValueWithScanner();
                 } while (min >= max);
                 return new Model(min, max);
             case Const.SECOND_MENU_ITEM:
                 return new Model();        // Default constructor
             case Const.THIRD_MENU_ITEM:
-                System.exit(0);             // Exit from program
+                System.exit(0);// Exit from program
         }
 
         return null;
@@ -158,42 +160,40 @@ public class Controller {
      * Checking input values.
      * Verifying on integer digits.
      *
-     * @param sc Scanner, which has created in {@link Controller#run()}
      * @return integer value of number from console
      */
-    public int inputIntValueWithScanner(Scanner sc) {
+    public int inputIntValueWithScanner() {
         view.printlnMessage(View.INPUT_INT_DATA_STRING);
 
         // User have to have exit possibility
-        if (sc.hasNext(View.EXIT_STRING)) System.exit(0);
+        if (scanner.hasNext(View.EXIT_STRING)) System.exit(0);
 
-        while (!sc.hasNextInt()) {
+        while (!scanner.hasNextInt()) {
             view.printlnMessage(View.ERROR_MESSAGE +
                     View.INPUT_INT_DATA_STRING);
-            sc.next();
+            scanner.next();
         }
-        return sc.nextInt();
+        return scanner.nextInt();
     }
 
     /**
      * Checking input values.
      * Verifying on integer digits.
      *
-     * @param sc Scanner, which has created in {@link Controller#run()}
      * @return integer value of number from console
      */
-    public int inputValueWithScannerForMenu(Scanner sc) {
+    public int inputValueWithScannerForMenu() {
         view.printMenu();
         while (true) {
             /* Integer values verifying */
-            while (!sc.hasNextInt()) {
+            while (!scanner.hasNextInt()) {
                 view.printlnMessage(View.ERROR_MESSAGE);
                 view.printMenu();
-                sc.next();
+                scanner.next();
             }
 
             /* Verifying values, which should be in menu diapason */
-            int nextInt = sc.nextInt();
+            int nextInt = scanner.nextInt();
             if ((nextInt > 0) && (nextInt <= View.MENU_STRINGS.length))
                 return nextInt;
             else {
@@ -201,5 +201,13 @@ public class Controller {
                 view.printMenu();
             }
         }
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public void setScanner(ScannerAdapter scanner) {
+        this.scanner = scanner;
     }
 }

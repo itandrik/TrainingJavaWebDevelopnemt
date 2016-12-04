@@ -64,3 +64,6 @@ Tasks for Java courses
 
 10. Task 10:
   Creating custom LinkedList. It should contain all basic methods, implement List and works properly. Cover all methods by unit tests.
+
+11. Task 11:
+   Creating custom TreeSet. It should contain all basic methods and works properly. Cover all methods by unit tests.

@@ -71,3 +71,5 @@ Tasks for Java courses
    Creating custom HashMap. It should contain all basic methods and works properly. Cover all methods by unit tests.
 13. Task 13:
    Test controller(from "More-Less" game, Task 1) with Mockito.
+13. Task 14:
+   Creating SQL queries.

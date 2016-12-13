@@ -17,6 +17,7 @@ public class Controller {
     }
 
     public void processUser() {
-
+        model.initEmployees();
+        view.printlnMessage(model.toString());
     }
 }

@@ -3,9 +3,6 @@ package com.javaweb.model.entity;
 import com.javaweb.model.entity.archieve.Archive;
 import com.javaweb.model.entity.archieve.ManagerMemento;
 import com.javaweb.model.entity.factory.EmployeeCreator;
-import com.javaweb.model.entity.factory.ManagerCreator;
-import com.javaweb.model.entity.factory.OtherCreator;
-import com.javaweb.model.entity.factory.WorkerCreator;
 
 /**
  * Created by Dron on 13-Dec-16.
@@ -31,7 +28,7 @@ public abstract class Employee {
                     this.employeeType.equals(EmployeeType.WORKER)) &&
                     type.equals(EmployeeType.MANAGER) &&
                     managerMemento != null) {
-                Manager manager = (Manager) createEmployee(
+                Manager manager = (Manager)EmployeeCreator.getEmployee(
                         managerMemento.getName(),
                         managerMemento.getBirthDate(),
                         managerMemento.getAdoptionDate(), type);
@@ -44,30 +41,12 @@ public abstract class Employee {
                         ((Manager)this).getAttachedWorkers(),
                         getName(),getBirthDate(),getAdoptionDate());
                 archive.addMangerToArchive(manager);
-                return createEmployee(getName(),getBirthDate(),
+
+                return EmployeeCreator.getEmployee(getName(),getBirthDate(),
                         getAdoptionDate(),type);
             }
         }
         return null;
-    }
-
-    private Employee createEmployee(String name,String birthDate,
-                           String adoptionDate, EmployeeType type){
-        EmployeeCreator factory;
-        switch (type){
-            case MANAGER:
-                factory = new ManagerCreator();
-                break;
-            case OTHER:
-                factory = new OtherCreator();
-                break;
-            case WORKER:
-                factory = new WorkerCreator();
-                break;
-            default:
-                throw new RuntimeException("No such type of employee");
-        }
-        return factory.createEmployee(name,birthDate,adoptionDate);
     }
 
     public void setName(String name) {

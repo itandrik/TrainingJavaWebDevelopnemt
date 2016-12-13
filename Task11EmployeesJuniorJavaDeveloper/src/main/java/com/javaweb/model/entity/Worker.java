@@ -6,6 +6,7 @@ package com.javaweb.model.entity;
  */
 public class Worker extends Employee{
     private boolean isAttached = false;
+
     public Worker(String name, String birthDate, String adoptionDate) {
         super(name, birthDate, adoptionDate);
         setEmployeeType(EmployeeType.WORKER);

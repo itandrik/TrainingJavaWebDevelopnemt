@@ -1,7 +1,7 @@
 package com.javaweb.model.entity.factory;
 
 import com.javaweb.model.entity.Employee;
-import com.javaweb.model.entity.Worker;
+import com.javaweb.model.entity.OtherEmployee;
 
 /**
  * @author Andrii Chernysh;
@@ -12,6 +12,6 @@ public class OtherCreator implements EmployeeCreator{
     @Override
     public Employee createEmployee(String name,String birthDate,
                                    String adoptionDate) {
-        return new Other(name,birthDate,adoptionDate);
+        return new OtherEmployee(name,birthDate,adoptionDate);
     }
 }

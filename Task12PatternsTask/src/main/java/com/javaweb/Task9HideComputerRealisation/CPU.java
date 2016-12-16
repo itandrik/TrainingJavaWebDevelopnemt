@@ -21,17 +21,17 @@ public class CPU implements ProcessUnit {
 
     @Override
     public double getFrequency() {
-        return 0;
+        return frequency;
     }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public int getCacheCapacity() {
-        return 0;
+        return cacheCapacity;
     }
 
     public int getQuantityOfCores() {

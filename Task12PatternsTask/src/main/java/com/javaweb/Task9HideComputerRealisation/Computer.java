@@ -80,7 +80,7 @@ public class Computer implements IComputer{
     }
 
     public static class Builder {
-        private Computer computer;
+        private Computer computer = new Computer();
 
         public Builder setCpu(CPU cpu) {
             computer.setCpu(cpu);

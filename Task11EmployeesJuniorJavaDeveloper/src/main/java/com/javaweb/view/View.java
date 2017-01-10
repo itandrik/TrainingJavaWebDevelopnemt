@@ -5,6 +5,8 @@ package com.javaweb.view;
  *         E-Mail : itcherry97@gmail.com
  */
 public class View {
+    public static final String SEPARATOR =
+            "____________________________________";
     /**
      * @param message - array of strings for printing to console without next line symbol.
      */

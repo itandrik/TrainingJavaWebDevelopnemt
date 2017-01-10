@@ -1,11 +1,12 @@
-package com.javaweb.model.entity.archieve;
+package com.javaweb.model.entity.archive;
 
 import com.javaweb.model.entity.Worker;
 
 import java.util.List;
 
 /**
- * Created by Dron on 13-Dec-16.
+ * @author Andrii Chernysh;
+ *         E-MAIL : itcherry97@gmail.com;
  */
 public class ManagerMemento {
     private List<Worker> attachedWorkers;

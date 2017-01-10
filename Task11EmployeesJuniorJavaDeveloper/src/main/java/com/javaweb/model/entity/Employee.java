@@ -1,11 +1,12 @@
 package com.javaweb.model.entity;
 
-import com.javaweb.model.entity.archieve.Archive;
-import com.javaweb.model.entity.archieve.ManagerMemento;
+import com.javaweb.model.entity.archive.Archive;
+import com.javaweb.model.entity.archive.ManagerMemento;
 import com.javaweb.model.entity.factory.EmployeeCreator;
 
 /**
- * Created by Dron on 13-Dec-16.
+ * @author Andrii Chernysh;
+ *         E-MAIL : itcherry97@gmail.com;
  */
 public abstract class Employee {
     private String name;

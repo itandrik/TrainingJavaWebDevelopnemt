@@ -1,4 +1,4 @@
-package com.javaweb.model.entity.archieve;
+package com.javaweb.model.entity.archive;
 
 import com.javaweb.model.entity.Employee;
 

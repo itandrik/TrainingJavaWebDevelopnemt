@@ -1,5 +1,6 @@
 package com.javaweb.model.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,7 +8,7 @@ import java.util.List;
  *       E-MAIL : itcherry97@gmail.com;
  */
 public class Manager extends Employee{
-    private List<Worker> attachedWorkers;
+    private List<Worker> attachedWorkers = new ArrayList<>();
 
     public Manager(String name, String birthDate, String adoptionDate) {
         super(name, birthDate, adoptionDate);

@@ -9,12 +9,12 @@ import java.util.Iterator;
 /**
  * @author Andrii Chernysh on 12-Jan-17. E-Mail : itcherry97@gmail.com
  */
-public class Tu22Blinder extends Aircraft implements MilitaryAircraft {
+public class MilitaryAirplaneImpl extends Aircraft implements MilitaryAircraft {
     private Deque<Weapon> weapons;
     private Weapon currentWeapon;
     private Iterator<Weapon> weaponIterator;
 
-    public Tu22Blinder(String aircraftName) {
+    public MilitaryAirplaneImpl(String aircraftName) {
         super(aircraftName);
         weapons = new ArrayDeque<>();
         weaponIterator = weapons.iterator();
@@ -23,7 +23,7 @@ public class Tu22Blinder extends Aircraft implements MilitaryAircraft {
     @Override
     public void addWeapon(Weapon weapon) {
         weapons.add(weapon);
-        if(currentWeapon == null){
+        if (currentWeapon == null) {
             currentWeapon = weapon;
         }
     }
@@ -36,14 +36,14 @@ public class Tu22Blinder extends Aircraft implements MilitaryAircraft {
 
     @Override
     public void nextWeapon() {
-        if(!isEmptyWeaponList()) {
+        if (!isEmptyWeaponList()) {
             makeWeaponsDequeCircular();
             currentWeapon = weaponIterator.next();
         }
     }
 
-    private boolean isEmptyWeaponList(){
-        if(weapons.isEmpty()) {
+    private boolean isEmptyWeaponList() {
+        if (weapons.isEmpty()) {
             System.out.println("No weapon on the aircraft");
         }
         return weapons.isEmpty();
@@ -57,13 +57,20 @@ public class Tu22Blinder extends Aircraft implements MilitaryAircraft {
 
     @Override
     public void fire() {
-        currentWeapon.fire();
+        fireFromWeapon(currentWeapon);
+    }
+
+    private void fireFromWeapon(Weapon weapon) {
+        if (!isEmptyWeaponList()) {
+            System.out.println("\t" + getAircraftName() + " : ");
+            getAircraftState().fire(weapon);
+        }
     }
 
     @Override
     public void fireFromAllWeapons() {
-        for (Weapon weapon:weapons) {
-            weapon.fire();
+        for (Weapon weapon : weapons) {
+            fireFromWeapon(weapon);
         }
     }
 }

@@ -2,37 +2,28 @@ package com.javaweb.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.javaweb.controller.config.Initialization;
+import com.javaweb.controller.config.Pages;
 
 /**
  * Servlet implementation class ControllerMain
  */
 public class ControllerMain extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ControllerMain() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println(Initialization.LOW_BOUND_SETUP);
+		System.out.println(request.getParameter(Initialization.LOW_BOUND_SETUP));
+		System.out.println(request.getParameter(Initialization.HIGH_BOUND_SETUP));
+		//response.sendRedirect(Pages.GAME_PAGE);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

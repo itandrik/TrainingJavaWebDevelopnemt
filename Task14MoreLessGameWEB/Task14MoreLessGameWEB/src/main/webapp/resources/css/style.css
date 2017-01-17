@@ -1,0 +1,76 @@
+body{
+	background:#76b852;
+}
+#WholeContainer {
+	position: absolute;
+	top: 25%;
+	left: 25%;
+	width: 50%;
+	height: 25%;
+	background: #b3b3b3;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+#CustomLimitsContainer {
+	display: inline-block;
+	vertical-align: middle;
+	width: 50%;
+	margin: 0;
+	line-height: normal;
+}
+
+#DefaultLimitsContainer {
+	text-align:center;
+	display: inline-block;
+	vertical-align: middle;
+	width: 50%;
+	line-height: normal;
+	margin: 0;
+}
+
+#FormCustom {
+	display:block;
+    margin: 0 auto;
+}
+
+h1 {
+	color:#007FFF;	
+}
+
+p{
+	font-style: oblique;
+	font-size: 16px;
+	text-align: center;
+}
+
+.inner3 {
+	width: 15%;
+	line-height: normal;
+	display:block;
+    margin: 0 auto;
+}
+
+.block3 {
+	background: green;
+	height: 120px;
+	line-height: 120px;
+}
+
+.inner {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 3px 5px;
+}
+
+.centered-button {
+	display:block;
+    margin: 0 auto;
+    width:150px;
+    height:50px;
+}
+
+.centerFlex {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
